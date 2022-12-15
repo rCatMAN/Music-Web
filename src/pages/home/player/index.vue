@@ -208,10 +208,11 @@
 <script>
 import FooterMenu from "@/components/FooterMenu.vue";
 import ScrollPicker from "@/components/scroll-picker/picker/picker";
-
+import Audio from "@/components/vue-audio-better/audio";
 export default {
   components: { FooterMenu, ScrollPicker },
-
+  name: "player",
+  mixins: [Audio],
   data() {
     return {
       picker: null,
@@ -229,29 +230,41 @@ export default {
   watch: {
     id: {
       handler(newid, oldid) {
-        //获取当前播放歌曲信息
-        this.$axios({
-          method: "GET",
-          url: `http://localhost:3000/song/detail?ids=${this.id}`,
-        }).then((response) => {
-          this.songDetail = response.data.songs[0];
-          this.url = this.songDetail.al.picUrl;
-        });
-        //获取单曲歌词信息
-        this.$axios({
-          method: "GET",
-          url: `http://localhost:3000/lyric?id=${this.id}`,
-        }).then((response) => {
-          var arry = new Array();
-          this.lyric = response.data.lrc.lyric.split("\n");
-          this.lyric.forEach((data) => {
-            let arr1 = data.split("]");
-            if (arr1[1] != "")
-              arry.push({ value: arr1[0] + "]", name: arr1[1] });
+        if (newid != oldid) {
+          console.log("id有变化", newid, oldid);
+          //获取当前播放歌曲信息
+          this.$axios({
+            method: "GET",
+            url: `http://localhost:3000/song/detail?ids=${newid}`,
+          }).then((response) => {
+            this.songDetail = response.data.songs[0];
+            this.url = this.songDetail.al.picUrl;
           });
-          this.lyric = arry;
-        });
+          //获取单曲歌词信息
+          this.$axios({
+            method: "GET",
+            url: `http://localhost:3000/lyric?id=${newid}`,
+          }).then((response) => {
+            var arry = new Array();
+            this.lyric = response.data.lrc.lyric.split("\n");
+            this.lyric.forEach((data) => {
+              let arr1 = data.split("]");
+              if (arr1[1] != "")
+                arry.push({ value: arr1[0] + "]", name: arr1[1] });
+            });
+            this.lyric = arry;
+          });
+          //获取歌曲url
+          this.$axios({
+            method: "GET",
+            url: `http://localhost:3000/song/url/v1?id=${newid}&level=standard`,
+          }).then((response) => {
+            console.log("获取歌曲url: ", response);
+            this.audioSource = response.data.data[0].url;
+          });
+        }
       },
+
       immediate: true,
     },
 
@@ -260,7 +273,9 @@ export default {
     },
   },
   mounted() {},
-  destroyed() {},
+  destroyed() {
+    console.log("player界面摧毁了");
+  },
   methods: {
     back() {
       this.$router.back();

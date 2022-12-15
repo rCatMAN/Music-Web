@@ -164,7 +164,7 @@
           style="width: 1.6em; height: 1.6em"
           title="上一首"
         ></svg-icon>
-        <i @click="ChangePlayState, play">
+        <i @click="ChangePlayState(), TogglePlayStatus()">
           <svg-icon
             :icon-class="isPlaying === true ? 'pauseCircle' : 'playCircle'"
             style="width: 3em; height: 3em"
@@ -255,31 +255,22 @@ export default {
       isPlayerPage: false,
       isLike: false,
       selectedIndex: null,
+      level: "standard",
     };
   },
   computed: {},
   watch: {
     playingId: {
       handler(newid, oldid) {
-        if (newid != oldid) {
-          console.log("底部当前歌曲id改变", newid);
-          this.$axios({
-            method: "GET",
-            url: `http://localhost:3000/song/detail?ids=${newid}`,
-          }).then((response) => {
-            this.songDetail = response.data.songs[0];
-            this.url = this.songDetail.al.picUrl;
-          });
-          this.$axios({
-            method: "GET",
-            url: `http://localhost:3000/song/url/v1?id=${newid}&level=exhigh`,
-          }).then((response) => {
-            if (this.audioSource != response.data.data[0].url) {
-              this.audioSource = response.data.data[0].url;
-              console.log("audioSoure更新: ", this.audioSource);
-            }
-          });
-        }
+        //这
+        // console.log("底部当前歌曲id改变", newid);
+
+        this.$axios({
+          method: "GET",
+          url: `http://localhost:3000/song/detail?ids=${newid}`,
+        }).then((response) => {
+          this.songDetail = response.data.songs[0];
+        });
       },
       immediate: true,
     },

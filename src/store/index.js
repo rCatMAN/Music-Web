@@ -8,15 +8,15 @@ const store = new Vuex.Store({
         isPlaying: false,
         PlayingList: [],
 
+
     },
     mutations: {
         ChangePlaySongId(state, payload) {
-            state.nowPlayingID = payload.id
-
+            if (state.nowPlayingID != payload.id)
+                state.nowPlayingID = payload.id
         },
         ChangePlayState(state, payload) {
             state.isPlaying = payload.isPlaying
-
         },
 
     }

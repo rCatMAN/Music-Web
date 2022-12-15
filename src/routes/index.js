@@ -163,6 +163,7 @@ export default new createRouter({
         },
         {
             path: '/player',
+            name: "player",
             component: Player,
             meta: { index: 1 }
         },

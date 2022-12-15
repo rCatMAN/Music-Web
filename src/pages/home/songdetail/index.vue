@@ -72,7 +72,7 @@
           <span
             class="text-sm leading-8"
             v-for="(item, index) in lyric"
-            :key="item.time"
+            :key="index"
             v-show="index <= ifShowNum ? 1 : 0"
             >{{ item.ly }}</span
           >
@@ -464,7 +464,7 @@ export default {
       method: "GET",
       url: `http://localhost:3000/comment/music?id=${this.id}`,
     }).then((response) => {
-      console.log("评论信息", response);
+      // console.log("评论信息", response);
       this.comments = response.data.comments;
       this.hotComments = response.data.hotComments;
       this.commentsTotal = response.data.total;
