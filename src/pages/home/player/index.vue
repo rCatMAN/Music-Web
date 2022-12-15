@@ -280,7 +280,6 @@ export default {
     back() {
       this.$router.back();
     },
-    jndo() {},
   },
 };
 </script>
