@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="flex h-16 items-center">
-      <h2 class="text-2xl font-bold mr-auto ml-auto">{{ Title }}</h2>
+    <div class="flex h-16 items-center justify-center">
+      <h2 class="text-2xl font-bold" style="transform: translateX(-20px)">
+        {{ Title }}
+      </h2>
     </div>
     <div
       class="flex justify-between max-w-7xl mt-0 mr-auto ml-auto"
       style="min-width: 1000px"
     >
-      <div v-for="(item, index) in HL" :key="item.src" style="width: 20%">
+      <div v-for="(item, index) in playList" :key="item.id" style="width: 20%">
         <div class="overflow-hidden w-52 h-52">
           <div class="w-52 h-52">
             <router-link
@@ -18,9 +20,6 @@
               "
               :to="{
                 path: '/playlist/list',
-                query: {
-                  topInfo: item,
-                },
               }"
             >
               <el-image
@@ -30,7 +29,7 @@
                     selectedIndex === index ? 'scale(1.10)' : 'scale(1)',
                 }"
                 style="width: 208px; height: 208px"
-                :src="item.src"
+                :src="item.coverImgUrl"
                 fit="fill"
               >
               </el-image>
@@ -68,10 +67,15 @@
             }"
           >
             <h1 class="duration-150 text-sm font-semibold leading-5 w-52 title">
-              {{ item.title }}
+              {{ item.name }}
             </h1>
           </router-link>
-          <h6 class="text-xs font-thin mt-2">{{ item.singer }}</h6>
+          <div class="flex justify-between w-52">
+            <p class="text-xs font-thin mt-2 title">
+              {{ item.creator.nickname }}
+            </p>
+            <p class="text-xs font-thin mt-2">播放量:{{ item.playCount }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -86,7 +90,7 @@ export default {
       selectedIndex: null,
     };
   },
-  props: ["Title", "SubTitle", "HL"],
+  props: ["playList", "Title"],
   methods: {
     mouseEnter(index) {
       this.selectedIndex = index;

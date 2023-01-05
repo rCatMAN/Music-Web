@@ -1,19 +1,18 @@
 <template>
   <div class="" style="margin-left: 3%; margin-top: 3%">
-    <h2 class="text-2xl font-bold">音乐馆</h2>
-    <el-menu
-      default-active="/musichall/choiceness"
-      class="el-menu-demo"
-      mode="horizontal"
-      background-color="#fff"
-      text-color="#000000"
-      active-text-color="#00FA9A"
-      router
-    >
-      <el-menu-item v-for="mhm in musicHallMenu" :key="mhm.id" :index="mhm.id">
-        <span slot="title">{{ mhm.title }}</span>
-      </el-menu-item>
-    </el-menu>
+    <h2 class="text-3xl font-bold">音乐馆</h2>
+    <div class="flex items-center justify-around relative" style="width: 700px">
+      <div
+        class="relative flex flex-col items-center mt-7 mb-7"
+        v-for="(item, index) in musicHallMenu"
+        :key="index"
+      >
+        <p @click="changeSelected(index, item.id)" class="cursor-pointer Menu">
+          {{ item.title }}
+        </p>
+      </div>
+      <div class="selectedMenu absolute" :style="{ left: selectLeft }"></div>
+    </div>
     <transition name="el-zoom-in-center">
       <router-view></router-view>
     </transition>
@@ -34,15 +33,58 @@ export default {
         { id: "/musichall/digitalalbum", title: "数字专辑" },
         { id: "/musichall/phoneexclusive", title: "手机专享" },
       ],
+      selectIndex: 0,
+      selectLeft: "25px",
     };
   },
+  watch: {
+    selectIndex(n) {
+      switch (n) {
+        case 0:
+          this.selectLeft = "25px";
+          break;
+        case 1:
+          this.selectLeft = "125px";
+          break;
+        case 2:
+          this.selectLeft = "221px";
+          break;
+        case 3:
+          this.selectLeft = "303px";
+          break;
+        case 4:
+          this.selectLeft = "400px";
+          break;
+        case 5:
+          this.selectLeft = "515px";
+          break;
+        case 6:
+          this.selectLeft = "629px";
+          break;
+      }
+    },
+  },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    changeSelected(index, id) {
+      this.selectIndex = index;
+      this.$router.push({
+        path: id,
+      });
     },
   },
 };
 </script>
 
 <style scoped>
+.Menu:hover {
+  color: var(--primary-color);
+}
+.selectedMenu {
+  transition: all 0.3s ease-in-out;
+  bottom: 10px;
+  height: 3px;
+  width: 30px;
+  border-radius: 50px;
+  background-color: var(--primary-color);
+}
 </style>

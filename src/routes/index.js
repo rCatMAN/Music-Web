@@ -112,11 +112,6 @@ export default new createRouter({
                         }
                     ]
                 },
-
-                {
-                    path: '/login',
-                    component: Login
-                },
                 {
                     path: '/search',
                     component: Search,
@@ -160,6 +155,10 @@ export default new createRouter({
                     component: Recommend
                 },
             ]
+        },
+        {
+            path: '/login',
+            component: Login
         },
         {
             path: '/player',

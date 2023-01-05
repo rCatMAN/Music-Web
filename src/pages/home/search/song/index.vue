@@ -8,7 +8,7 @@
     </tr>
     <tr
       v-for="(item, index) in tableData"
-      :key="item.id"
+      :key="index"
       class="h-12"
       :style="{
         width: '800px',
@@ -24,18 +24,18 @@
       <td class="truncate" style="max-width: 200px; width: 200px">
         <span
           class="search_list cursor-pointer"
-          v-for="itemm in item.ar"
-          :key="itemm.id"
+          v-for="(itemm, indexx) in item.artists"
+          :key="indexx"
           >{{ itemm.name }}</span
         >
       </td>
       <td class="search_list truncate" style="max-width: 300px; width: 300px">
-        <span class="search_list cursor-pointer">{{ item.al.name }}</span>
+        <span class="search_list cursor-pointer">{{ item.album.name }}</span>
       </td>
       <td class="search_list" style="width: 250px">
         <span class="cursor-default"
-          >{{ parseInt((item.dt * 0.001) / 60) }}:{{
-            parseInt((item.dt * 0.001) % 60)
+          >{{ parseInt((item.duration * 0.001) / 60) }}:{{
+            parseInt((item.duration * 0.001) % 60)
           }}</span
         >
       </td>

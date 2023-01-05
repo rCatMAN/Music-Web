@@ -5,22 +5,33 @@
         <router-view class="child-view"></router-view>
       </keep-alive>
     </transition>
+    <FooterMenu v-if="!isLoginPage" />
   </div>
 </template>
 
 <script>
 import Home from "./pages/home/index.vue";
-
+import FooterMenu from "./components/FooterMenu.vue";
 export default {
   name: "App",
   components: {
     Home,
+    FooterMenu,
   },
   data() {
     return {
       transitionName: "down-up",
       mode: "in-out",
     };
+  },
+  computed: {
+    isLoginPage() {
+      if (this.$route.path === "/login") {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   watch: {
     $route(to, from) {

@@ -1,16 +1,77 @@
 <template>
-  <div class="w-ful relative">
+  <div
+    class="w-full h-16 z-10 fixed bottom-0"
+    :style="{
+      left: !isPlayerPage ? '200px' : '0',
+      'background-color': !isPlayerPage
+        ? 'rgba(255, 255, 255, 1)'
+        : 'rgba(255, 255, 255, 0)',
+    }"
+  >
     <el-drawer title="我是标题" :with-header="false" :visible.sync="drawer">
       <span>我来啦!</span>
     </el-drawer>
     <div
       class="flex relative"
-      style="min-width: 840px; border-top: 3px solid white"
+      style="min-width: 840px"
       :style="{
-        width: !isPlayerPage ? 'calc(100vw - 200px)' : '100vw',
-        'border-top': !isPlayerPage ? '3px solid #31c27c' : '3px solid white',
+        width: !isPlayerPage ? 'calc(100vw - 200px)' : `100vw`,
       }"
     >
+      <!-- 进度条 -->
+      <span
+        ref="Progress"
+        class="absolute transition-all cursor-pointer slider z-10"
+        :style="{
+          width: !isPlayerPage
+            ? `calc((100vw - 200px)* ${Progress})`
+            : `calc(100vw * ${Progress})`,
+          'background-color': !isPlayerPage
+            ? `rgba(0,250,154,1)`
+            : `rgba(49,194,124,1)`,
+        }"
+      ></span>
+      <!-- 进度条背景 -->
+      <span
+        class="absolute transition-all cursor-pointer slider"
+        :style="{
+          width: !isPlayerPage ? `calc(100vw - 200px)` : `100vw`,
+          'background-color': !isPlayerPage
+            ? `rgba(49,194,124,1)`
+            : `rgba(255,255,255,1)`,
+        }"
+      >
+      </span>
+      <!-- 进度按钮 -->
+      <span
+        class="rounded-full absolute z-10 bg-gray-50"
+        style="
+          width: 8px;
+          height: 8px;
+          top: -5.5px;
+          background-color: rgba(49, 194, 124, 1);
+        "
+        :style="{
+          left: !isPlayerPage
+            ? `calc(((100vw - 200px)* ${Progress}) - 4px)`
+            : `calc((100vw * ${Progress}) - 4px)`,
+          opacity: selectedIndex === 2 ? '1' : '0',
+        }"
+      >
+      </span>
+      <!-- 鼠标点击遮罩 -->
+      <span
+        ref="Pbar"
+        class="absolute cursor-pointer z-20"
+        style="height: 7px; top: -5px"
+        :style="{
+          width: !isPlayerPage ? `calc(100vw - 200px)` : `100vw`,
+        }"
+        @mouseenter="mouseEnter(2)"
+        @mouseleave="mouseLeave"
+        @mousedown="ChangeSeekAction"
+      >
+      </span>
       <div
         class="menu_footer absolute"
         :style="{
@@ -36,6 +97,7 @@
               fit="fill"
             ></el-image>
             <div
+              v-if="!isPlayerPage"
               @mouseenter="mouseEnter(1)"
               @mouseleave="mouseLeave"
               @click="ToPlayerPage"
@@ -51,6 +113,7 @@
               }"
             ></div>
             <i
+              v-if="!isPlayerPage"
               @mouseenter="mouseEnter(1)"
               class="cursor-pointer"
               @click="ToPlayerPage"
@@ -155,7 +218,7 @@
           class="cursor-pointer"
           :class="!isPlayerPage ? 'foot_icon' : 'foot_player_icon'"
           style="width: 1.6em; height: 1.6em"
-          title="上一首"
+          title="循环方式"
         ></svg-icon>
         <svg-icon
           icon-class="lastsong"
@@ -164,9 +227,9 @@
           style="width: 1.6em; height: 1.6em"
           title="上一首"
         ></svg-icon>
-        <i @click="ChangePlayState(), TogglePlayStatus()">
+        <i @click="ChangePlayStatus()">
           <svg-icon
-            :icon-class="isPlaying === true ? 'pauseCircle' : 'playCircle'"
+            :icon-class="isPlaying ? 'pauseCircle' : 'playCircle'"
             style="width: 3em; height: 3em"
             class="cursor-pointer"
             :class="!isPlayerPage ? 'foot_icon' : 'foot_player_icon'"
@@ -178,7 +241,7 @@
           class="cursor-pointer"
           :class="!isPlayerPage ? 'foot_icon' : 'foot_player_icon'"
           style="width: 1.6em; height: 1.6em"
-          title="上一首"
+          title="下一首"
         ></svg-icon>
 
         <el-popover
@@ -187,8 +250,8 @@
           trigger="click"
           class="popover_box"
         >
-          <div class="block">
-            <el-slider v-model="valueVolume" vertical height="100px">
+          <div class="block align-middle w-auto">
+            <el-slider v-model="ValueVolume" vertical height="100px">
             </el-slider>
             <div style="height: 20px"></div>
             <i @click="ChangeMute()"
@@ -196,7 +259,7 @@
                 icon-class="mute"
                 class="cursor-pointer"
                 :class="!isPlayerPage ? 'foot_icon' : 'foot_player_icon'"
-                title="上一首"
+                title="静音"
               ></svg-icon
             ></i>
           </div>
@@ -205,7 +268,7 @@
               icon-class="vol"
               class="cursor-pointer"
               :class="!isPlayerPage ? 'foot_icon' : 'foot_player_icon'"
-              title="上一首"
+              title="音量"
             ></svg-icon
           ></i>
         </el-popover>
@@ -218,8 +281,9 @@
           right: !isPlayerPage ? '5vw' : '5vw',
         }"
       >
-        <h1 class="font_time">{{ time_playnow }}</h1>
-        <h1 class="font_time">{{ time_total }}</h1>
+        <h1 class="font_time">{{ NowTime }}</h1>
+        <h1 class="font_time ml-3">/</h1>
+        <h1 class="font_time ml-3">{{ TotalTime.DetailTime }}</h1>
         <i @click="drawer = true" class="icon_songlist ml-4">
           <svg-icon
             icon-class="songlist"
@@ -234,51 +298,171 @@
 </template>
 
 <script>
-import Audio from "@/components/vue-audio-better/audio";
 export default {
   name: "FooterMenu",
   props: [],
-  mixins: [Audio],
+  mixins: [],
   data() {
     return {
       songDetail: null,
       loading: true,
       drawer: false,
-      musicTitle: "BOW",
-      musicSinger: "MFS",
       playStatu: false,
-      i: 0,
       muteStatu: false,
-      time_playnow: "00:00",
-      time_total: "/05:33",
-      valueVolume: 0,
-      isPlayerPage: false,
+      TotalTime: {
+        DetailTime: "00:00",
+        CalcTime: 0,
+      },
+      IsDragging: false,
+      ValueVolume: 50,
       isLike: false,
       selectedIndex: null,
       level: "standard",
+      NowTime: "00:00",
+      Seek: 0,
+      //计算播放时间
+      CalcSeek: {
+        Seek: {
+          Id: null,
+          Interval: 1000 / 4, // 每秒四次
+          Hook: () => {
+            if (!this.IsDragging) {
+              this.Seek = this.howl.seek();
+              this.$store.commit("ChangePlayTime", { PlayTime: this.Seek });
+            }
+            var s = parseInt(this.howl.seek());
+            var m = parseInt(this.howl.seek() / 60);
+            var ts = 0;
+            var tm = 0;
+            if (s < 10) {
+              ts = "0" + s;
+            } else if (s >= 10 && s < 60) {
+              ts = s;
+            } else {
+              if (s % 60 < 10) {
+                ts = "0" + (s % 60);
+              } else {
+                ts = s % 60;
+              }
+            }
+            if (m < 10) {
+              tm = "0" + m;
+            } else {
+              tm = m;
+            }
+            this.NowTime = tm + ":" + ts;
+          },
+        },
+      },
     };
   },
-  computed: {},
+  computed: {
+    howl() {
+      return this.$store.state.howl;
+    },
+    playingId() {
+      return this.$store.state.nowPlayingID;
+    },
+    isPlaying() {
+      return this.$store.state.isPlaying;
+    },
+    isPlayerPage() {
+      if (this.$route.path === "/player") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    IsLoaded() {
+      return this.$store.state.IsLoaded;
+    },
+    Progress() {
+      if (this.TotalTime.CalcTime === 0) return 0;
+      return this.Seek / this.TotalTime.CalcTime;
+    },
+  },
   watch: {
     playingId: {
-      handler(newid, oldid) {
-        //这
-        // console.log("底部当前歌曲id改变", newid);
-
+      handler(newId, oldId) {
+        //播放新音乐时将旧howler清除
+        if (this.howl != null) {
+          this.howl.unload();
+          this.Seek = 0;
+          console.log("暂停");
+          this.$store.commit("ChangePlayState", { isPlaying: false });
+        }
         this.$axios({
           method: "GET",
-          url: `http://localhost:3000/song/detail?ids=${newid}`,
+          url: `http://localhost:3000/song/detail?ids=${newId}`,
         }).then((response) => {
           this.songDetail = response.data.songs[0];
+          this.TotalTime.DetailTime =
+            (parseInt((this.songDetail.dt * 0.001) / 60) < 10
+              ? "0" + parseInt((this.songDetail.dt * 0.001) / 60)
+              : parseInt((this.songDetail.dt * 0.001) / 60)) +
+            ":" +
+            (parseInt((this.songDetail.dt * 0.001) % 60) < 10
+              ? "0" + parseInt((this.songDetail.dt * 0.001) % 60)
+              : parseInt((this.songDetail.dt * 0.001) % 60));
+        });
+        //取得音乐链接
+        this.$axios({
+          method: "GET",
+          url: `http://localhost:3000/song/url/v1?id=${newId}&level=${this.level}`,
+        }).then((response) => {
+          this.$store.commit("NewHowler", { url: response.data.data[0].url });
         });
       },
-      immediate: true,
     },
-    songDetail: function (newValue, oldValue) {
+    howl: {
+      handler(n) {
+        this.ChangePlayStatus();
+      },
+    },
+    IsLoaded() {
+      this.TotalTime.CalcTime = this.howl.duration();
+    },
+    isPlaying(playing) {
+      // 播放时进度条调整
+      if (playing) {
+        this.CalcSeek.Seek.Id = setInterval(
+          this.CalcSeek.Seek.Hook,
+          this.CalcSeek.Seek.Interval
+        );
+      } else {
+        clearInterval(this.CalcSeek.Seek.Id);
+      }
+    },
+    ValueVolume(n) {
+      if (this.howl != null) {
+        this.$store.commit("ChangeVolume", { Volume: n * 0.01 });
+        if (n != 0) {
+          this.howl.mute(false);
+        }
+        this.howl.volume(this.$store.state.Volume);
+      }
+    },
+    songDetail(newValue, oldValue) {
       if (newValue != null) this.loading = false;
     },
   },
   methods: {
+    ChangePlayStatus() {
+      if (this.howl)
+        if (this.isPlaying) {
+          this.howl.pause();
+          console.log("暂停");
+          this.$store.commit("ChangePlayState", { isPlaying: false });
+        } else {
+          this.howl.play();
+          console.log("播放");
+          this.$store.commit("ChangePlayState", { isPlaying: true });
+        }
+    },
+    cleanHowler() {
+      this.howl.stop();
+      this.$store.commit("CleanHowler");
+    },
     ToPlayerPage() {
       this.$router.push({
         path: `/player`,
@@ -293,35 +477,67 @@ export default {
     Tolike() {
       this.isLike = !this.isLike;
     },
-    ChangePlayState() {
-      this.$store.commit("ChangePlayState", { isPlaying: !this.isPlaying });
-    },
     ChangeMute() {
-      if (this.valueVolume != 0) {
-        this.i = this.valueVolume;
-        this.muteStatu = true;
-        this.valueVolume = 0;
+      if (this.howl != null) {
+        if (!this.muteStatu) {
+          this.muteStatu = true;
+          this.howl.mute(true);
+        } else {
+          this.muteStatu = false;
+          this.howl.mute(false);
+        }
+      }
+    },
+    //拖动进度条功能
+    MouseListenerEvent(event) {
+      let PbarObj = this.$refs.Pbar.getBoundingClientRect();
+      this.IsDragging = true;
+      if (this.isPlayerPage) {
+        this.Seek = (event.clientX / PbarObj.width) * this.TotalTime.CalcTime;
       } else {
-        this.muteStatu = false;
-        this.valueVolume = this.i;
-        this.i = 0;
+        this.Seek =
+          ((event.clientX - 200) / PbarObj.width) * this.TotalTime.CalcTime;
+      }
+    },
+    ChangeSeekAction() {
+      if (this.howl != null) {
+        document.body.addEventListener("mousemove", this.MouseListenerEvent);
       }
     },
   },
   mounted() {
-    if (this.$route.path === "/player") {
-      this.isPlayerPage = true;
-    } else {
-      this.isPlayerPage = false;
-    }
+    var _this = this;
+    document.body.addEventListener("mouseup", function (e) {
+      //点击进度条后放开鼠标跳转进度功能
+      if (_this.IsDragging) {
+        let PbarObj = _this.$refs.Pbar.getBoundingClientRect();
+        let PbarX = e.clientX;
+        if (_this.isPlayerPage) {
+          _this.howl.seek((PbarX / PbarObj.width) * _this.TotalTime.CalcTime);
+        } else {
+          _this.howl.seek(
+            ((PbarX - 200) / PbarObj.width) * _this.TotalTime.CalcTime
+          );
+        }
+        document.body.removeEventListener(
+          "mousemove",
+          _this.MouseListenerEvent
+        );
+        _this.IsDragging = false;
+      }
+    });
   },
-
   updated() {},
 };
 </script>
 
 
 <style scoped>
+.slider {
+  top: -3px;
+  left: 0px;
+  height: 3px;
+}
 .foot_icon {
   color: rgb(0, 0, 0);
   transition: all 0.1s;

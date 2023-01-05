@@ -415,7 +415,6 @@ export default {
       sec: "",
       ifShowNum: 13,
       ifShowWord: "[展开]",
-      lyricLength: "",
       lyric: null,
       textarea: "",
       textLeft: 300,
@@ -457,7 +456,6 @@ export default {
         arry.push({ time: arr1[0] + "]", ly: arr1[1] });
       });
       this.lyric = arry;
-      this.lyricLength = arry.length;
     });
     //获取单曲评论信息
     this.$axios({

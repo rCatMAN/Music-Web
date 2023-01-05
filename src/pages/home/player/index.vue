@@ -191,28 +191,16 @@
           </div>
         </template>
       </el-skeleton>
-
-      <el-container>
-        <el-footer
-          style="position: absolute; bottom: 0px; padding: 0"
-          class=""
-          height="65px"
-        >
-          <FooterMenu />
-        </el-footer>
-      </el-container>
     </div>
   </div>
 </template>
 
 <script>
-import FooterMenu from "@/components/FooterMenu.vue";
 import ScrollPicker from "@/components/scroll-picker/picker/picker";
-import Audio from "@/components/vue-audio-better/audio";
 export default {
-  components: { FooterMenu, ScrollPicker },
+  components: { ScrollPicker },
   name: "player",
-  mixins: [Audio],
+  mixins: [],
   data() {
     return {
       picker: null,
@@ -225,6 +213,9 @@ export default {
   computed: {
     id() {
       return this.$store.state.nowPlayingID;
+    },
+    PlayTime() {
+      return this.$store.state.PlayTime;
     },
   },
   watch: {
@@ -248,34 +239,59 @@ export default {
             var arry = new Array();
             this.lyric = response.data.lrc.lyric.split("\n");
             this.lyric.forEach((data) => {
-              let arr1 = data.split("]");
-              if (arr1[1] != "")
-                arry.push({ value: arr1[0] + "]", name: arr1[1] });
+              let arr1 = data.split(".");
+              let arr2 = data.split("]");
+              arry.push({ value: arr1[0], name: arr2[1] });
             });
             this.lyric = arry;
-          });
-          //获取歌曲url
-          this.$axios({
-            method: "GET",
-            url: `http://localhost:3000/song/url/v1?id=${newid}&level=standard`,
-          }).then((response) => {
-            console.log("获取歌曲url: ", response);
-            this.audioSource = response.data.data[0].url;
+            console.log("arry: ", arry);
           });
         }
       },
 
       immediate: true,
     },
-
-    songDetail: function (newValue, oldValue) {
+    //歌词滚动----------------------------------------
+    picker(n) {
+      if (this.lyric) {
+      }
+    },
+    PlayTime(n) {
+      if (n < 10) {
+        this.lyric.forEach((data) => {
+          if (data.value == "[00:0" + parseInt(n)) {
+            this.picker = "[00:0" + parseInt(n);
+          }
+        });
+      } else if (n < 60) {
+        this.lyric.forEach((data) => {
+          if (data.value == "[00:" + parseInt(n)) {
+            this.picker = "[00:" + parseInt(n);
+          }
+        });
+      } else if (n > 60) {
+        let m = parseInt(n) / 60;
+        let s = parseInt(n) % 60;
+        var mt;
+        if (m < 10) mt = "0" + m;
+        else mt = m;
+        var st;
+        if (s < 10) st = "0" + s;
+        else st = s;
+        this.lyric.forEach((data) => {
+          if (data.value == "[0" + m + ":" + st) {
+            this.picker = "[0" + m + ":" + st;
+          }
+        });
+      }
+    },
+    //-----------------------------------------------
+    songDetail(newValue, oldValue) {
       if (newValue != null) this.loading = false;
     },
   },
   mounted() {},
-  destroyed() {
-    console.log("player界面摧毁了");
-  },
+  destroyed() {},
   methods: {
     back() {
       this.$router.back();

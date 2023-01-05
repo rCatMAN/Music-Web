@@ -16,9 +16,6 @@
             <router-view></router-view>
           </transition>
         </el-main>
-        <el-footer height="65px">
-          <FooterMenu />
-        </el-footer>
       </el-container>
     </el-container>
   </div>
