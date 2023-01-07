@@ -7,7 +7,7 @@
     </div>
     <ul class="toplist_list">
       <li
-        v-for="(item, index) in TopList"
+        v-for="(item, index) in topList"
         :key="item.title"
         class="toplist_item"
       >
@@ -78,7 +78,7 @@
             class="toplist_line"
           ></i>
           <ul @mouseenter="mouseEnter(index)" class="absolute top-48">
-            <li v-for="itemm in item.song" :key="itemm.SongName">
+            <li v-for="itemm in item.song" :key="itemm.song">
               <div class="flex h-14 ml-6 mb-5" style="width: 200px">
                 <span class="w-8 text-sm font-normal text-white text-center">
                   {{ itemm.Number }}
@@ -86,7 +86,7 @@
                 <div class="h-14" style="width: 168px">
                   <div class="mb-2" style="max-height: 20px">
                     <div
-                      @click="$router.push({ path: '/songdetail' })"
+                      @click="pushToPage(itemm.id)"
                       class="
                         truncate
                         cursor-pointer
@@ -94,6 +94,7 @@
                         font-normal
                         text-white
                         inline-block
+                        text
                       "
                       style="max-width: 140px"
                     >
@@ -101,19 +102,22 @@
                     </div>
                   </div>
                   <div>
-                    <div
-                      @click="$router.push({ path: '/singerdetail' })"
-                      class="
-                        truncate
-                        inline-block
-                        cursor-pointer
-                        text-sm
-                        font-normal
-                        text-white
-                      "
-                      style="max-width: 140px"
-                    >
-                      {{ itemm.Singer }}
+                    <div class="truncate inline-block" style="max-width: 140px">
+                      <span
+                        v-for="(itemmm, indexxx) in itemm.singer"
+                        :key="indexxx"
+                        @click="pushToPage(itemmm.id)"
+                        class="
+                          cursor-pointer
+                          text-sm
+                          font-normal
+                          text-white
+                          mr-8
+                          text
+                        "
+                      >
+                        {{ itemmm.name }}</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -128,66 +132,162 @@
 
 <script>
 export default {
-  props: ["arr", "arrtitle"],
   data() {
     return {
-      TopList: [
-        {
-          title: "热歌",
-          song: [
-            { Number: "1", SongName: "Letting", Singer: "蔡健雅" },
-            { Number: "2", SongName: "木偶戏", Singer: "玥夏" },
-            { Number: "3", SongName: "晚风告白", Singer: "星野" },
-          ],
-        },
-        {
-          title: "新歌",
-          song: [
-            { Number: "1", SongName: "晚风告白", Singer: "星野" },
-            { Number: "2", SongName: "木偶戏", Singer: "玥夏" },
-            { Number: "3", SongName: "ANTIFRAGILE", Singer: "LE SSERAFIM" },
-          ],
-        },
-        {
-          title: "流行指数",
-          song: [
-            { Number: "1", SongName: "木偶戏", Singer: "玥夏" },
-            { Number: "2", SongName: "晚风告白", Singer: "星野" },
-            { Number: "3", SongName: "她说", Singer: "林俊杰" },
-          ],
-        },
-        {
-          title: "欧美",
-          song: [
-            {
-              Number: "1",
-              SongName: "Anti-Hero (Feat. Bleachers) (Explicit)",
-              Singer: "Taylor Swift/Bleachers",
-            },
-            {
-              Number: "2",
-              SongName: "I'm a Mess (with YUNGBLUD)",
-              Singer: "Avril Lavigne/YUNGBLUD",
-            },
-            {
-              Number: "3",
-              SongName:
-                "Lift Me Up (From Black Panther: Wakanda Forever - Music From and Inspired By)",
-              Singer: "Rihanna",
-            },
-          ],
-        },
-        {
-          title: "韩国",
-          song: [
-            { Number: "1", SongName: "ANTIFRAGILE", Singer: "LE SSERAFIM" },
-            { Number: "2", SongName: "DREAM", Singer: "SEVENTEEN (세븐틴)" },
-            { Number: "3", SongName: "Pink Venom", Singer: "BLACKPINK" },
-          ],
-        },
-      ],
+      topList: [],
       SelectedIndex: null,
     };
+  },
+  mounted() {
+    //热歌榜
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/track/all?id=3778678&limit=3`,
+    }).then((response) => {
+      var arr = {
+        title: "热歌",
+        song: [
+          {
+            Number: "1",
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id,
+          },
+          {
+            Number: "2",
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[1].id,
+          },
+          {
+            Number: "3",
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[2].id,
+          },
+        ],
+      };
+      this.topList.push(arr);
+    });
+    //新歌榜
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/track/all?id=3779629&limit=3`,
+    }).then((response) => {
+      var arr = {
+        title: "新歌",
+        song: [
+          {
+            Number: "1",
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id,
+          },
+          {
+            Number: "2",
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[1].ar,
+            id: response.data.songs[1].id,
+          },
+          {
+            Number: "3",
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+          },
+        ],
+      };
+      this.topList.push(arr);
+    });
+    //流行指数
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/track/all?id=19723756&limit=3`,
+    }).then((response) => {
+      var arr = {
+        title: "流行指数",
+        song: [
+          {
+            Number: "1",
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id,
+          },
+          {
+            Number: "2",
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[1].ar,
+            id: response.data.songs[1].id,
+          },
+          {
+            Number: "3",
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[2].id,
+          },
+        ],
+      };
+      this.topList.push(arr);
+    });
+    //欧美
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/track/all?id=2809513713&limit=3`,
+    }).then((response) => {
+      var arr = {
+        title: "欧美",
+        song: [
+          {
+            Number: "1",
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id,
+          },
+          {
+            Number: "2",
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[1].ar,
+            id: response.data.songs[1].id,
+          },
+          {
+            Number: "3",
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[2].id,
+          },
+        ],
+      };
+      this.topList.push(arr);
+    });
+    //韩国
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/track/all?id=745956260&limit=3`,
+    }).then((response) => {
+      var arr = {
+        title: "韩国",
+        song: [
+          {
+            Number: "1",
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id,
+          },
+          {
+            Number: "2",
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[1].ar,
+            id: response.data.songs[1].id,
+          },
+          {
+            Number: "3",
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[2].id,
+          },
+        ],
+      };
+      this.topList.push(arr);
+    });
   },
   methods: {
     mouseEnter(index) {
@@ -196,11 +296,23 @@ export default {
     mouseLeave() {
       this.SelectedIndex = null;
     },
+    pushToPage(id) {
+      console.log("id: ", id);
+
+      this.$router.push({
+        path: `/songdetail`,
+        query: { id },
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
+.text:hover {
+  color: var(--primary-color);
+  transition: all 0.15s;
+}
 .toplist_list {
   display: flex;
   justify-content: space-between;

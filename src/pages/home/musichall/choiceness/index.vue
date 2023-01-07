@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-carousel
+      class="mt-10"
       v-if="bannerDetails"
       trigger="click"
       :interval="6000"
@@ -20,38 +21,76 @@
         </h3>
       </el-carousel-item>
     </el-carousel>
-    <HorizontalList v-if="playList" :playList="playList" Title="精选歌单" />
-
+    <HorizontalList
+      class="mt-10 mb-14"
+      v-if="playList"
+      :detailArr="playList"
+      Title="精 选 歌 单"
+    />
+    <HorizontalList
+      class="mb-14"
+      v-if="newSongList"
+      :detailArr="newSongList"
+      Title="新 歌 首 发"
+    />
+    <LeaderBoard />
     <div class="space1"></div>
   </div>
 </template>
 
 <script>
 import HorizontalList from "@/components/HorizontalList.vue";
+import LeaderBoard from "@/components/LeaderBoard.vue";
 
 export default {
   data() {
     return {
       playList: [],
       bannerDetails: null,
+      newSongList: [],
     };
   },
-  components: { HorizontalList },
+  components: { HorizontalList, LeaderBoard },
   mounted() {
+    //精选歌单
     this.$axios({
       method: "GET",
       url: `http://localhost:3000/top/playlist/highquality&limit=5`,
     }).then((response) => {
       for (var i = 0; i < 5; i++) {
-        this.playList.push(response.data.playlists[i]);
+        var arr = {
+          name: response.data.playlists[i].name,
+          artists: response.data.playlists[i].creator.nickname,
+          picUrl: response.data.playlists[i].coverImgUrl,
+          playCount: response.data.playlists[i].playCount,
+          id: response.data.playlists[i].id,
+          type: 1,
+        };
+        this.playList.push(arr);
       }
+      console.log(" this.playList: ", this.playList);
     });
     this.$axios({
       method: "GET",
       url: `http://localhost:3000/banner?type=0`,
     }).then((response) => {
       this.bannerDetails = response.data.banners;
-      console.log("this.bannerDetails: ", this.bannerDetails);
+    });
+    //新歌首发
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/top/song`,
+    }).then((response) => {
+      for (var i = 0; i < 5; i++) {
+        var arr = {
+          name: response.data.data[i].name,
+          artists: response.data.data[i].artists,
+          picUrl: response.data.data[i].album.picUrl,
+          id: response.data.data[i].id,
+          type: 0,
+        };
+        this.newSongList.push(arr);
+      }
     });
   },
 };

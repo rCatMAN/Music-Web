@@ -215,6 +215,8 @@ export default {
       return this.$store.state.nowPlayingID;
     },
     PlayTime() {
+      if (this.$store.state.PlayTime < 10) {
+      }
       return this.$store.state.PlayTime;
     },
   },
@@ -241,6 +243,7 @@ export default {
             this.lyric.forEach((data) => {
               let arr1 = data.split(".");
               let arr2 = data.split("]");
+
               arry.push({ value: arr1[0], name: arr2[1] });
             });
             this.lyric = arry;
