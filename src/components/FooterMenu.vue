@@ -21,7 +21,7 @@
       <!-- 进度条 -->
       <span
         ref="Progress"
-        class="absolute transition-all cursor-pointer slider z-10"
+        class="absolute cursor-pointer slider z-10"
         :style="{
           width: !isPlayerPage
             ? `calc((100vw - 200px)* ${Progress})`
@@ -324,7 +324,7 @@ export default {
       CalcSeek: {
         Seek: {
           Id: null,
-          Interval: 1000 / 4, // 每秒四次
+          Interval: 1000 / 10, // 每秒十次
           Hook: () => {
             if (!this.IsDragging) {
               this.Seek = this.howl.seek();

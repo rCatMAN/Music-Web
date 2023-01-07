@@ -214,10 +214,27 @@ export default {
     id() {
       return this.$store.state.nowPlayingID;
     },
+    //计算歌词滚动对比时间
     PlayTime() {
-      if (this.$store.state.PlayTime < 10) {
+      var s;
+      var m;
+      var time = this.$store.state.PlayTime;
+      if (time < 10) {
+        return "00:0" + time.toFixed(1);
+      } else if (time < 60) {
+        return "00:" + time.toFixed(1);
+      } else if (time > 60) {
+        m = time.toFixed(1) / 60;
+        s = time.toFixed(1) % 60;
+        if (s < 10) {
+          var ss = "0" + s.toFixed(1);
+        } else {
+          var ss = s.toFixed(1);
+        }
+        return "0" + parseInt(m) + ":" + ss;
+      } else if ((time = 0)) {
+        return "00:00";
       }
-      return this.$store.state.PlayTime;
     },
   },
   watch: {
@@ -241,10 +258,9 @@ export default {
             var arry = new Array();
             this.lyric = response.data.lrc.lyric.split("\n");
             this.lyric.forEach((data) => {
-              let arr1 = data.split(".");
               let arr2 = data.split("]");
-
-              arry.push({ value: arr1[0], name: arr2[1] });
+              let str = arr2[0].slice(1, 8);
+              arry.push({ value: str, name: arr2[1] });
             });
             this.lyric = arry;
             console.log("arry: ", arry);
@@ -260,33 +276,7 @@ export default {
       }
     },
     PlayTime(n) {
-      if (n < 10) {
-        this.lyric.forEach((data) => {
-          if (data.value == "[00:0" + parseInt(n)) {
-            this.picker = "[00:0" + parseInt(n);
-          }
-        });
-      } else if (n < 60) {
-        this.lyric.forEach((data) => {
-          if (data.value == "[00:" + parseInt(n)) {
-            this.picker = "[00:" + parseInt(n);
-          }
-        });
-      } else if (n > 60) {
-        let m = parseInt(n) / 60;
-        let s = parseInt(n) % 60;
-        var mt;
-        if (m < 10) mt = "0" + m;
-        else mt = m;
-        var st;
-        if (s < 10) st = "0" + s;
-        else st = s;
-        this.lyric.forEach((data) => {
-          if (data.value == "[0" + m + ":" + st) {
-            this.picker = "[0" + m + ":" + st;
-          }
-        });
-      }
+      this.picker = n;
     },
     //-----------------------------------------------
     songDetail(newValue, oldValue) {

@@ -14,7 +14,7 @@ const store = new Vuex.Store({
         howl: null,
         IsLoaded: false,
         Volume: 0.5,
-        PlayTime: "[00:00.000]"
+        PlayTime: 0,
     },
     mutations: {
         ChangePlayTime(state, payload) {
