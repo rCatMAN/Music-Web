@@ -3,7 +3,7 @@
     <h2 class="text-3xl font-bold">音乐馆</h2>
     <div class="flex items-center justify-around relative" style="width: 700px">
       <div
-        class="relative flex flex-col items-center mt-7 mb-7"
+        class="relative mt-7 mb-7"
         v-for="(item, index) in musicHallMenu"
         :key="index"
       >

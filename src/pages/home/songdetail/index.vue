@@ -3,7 +3,12 @@
     <div class="flex w-full" style="min-width: 960px">
       <div class="demo-image">
         <el-image
-          style="width: 250px; height: 250px; border-radius: 15px"
+          style="
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            box-shadow: rgb(107 114 128) 0 10px 40px -5px;
+          "
           :src="url"
           fit="fill"
         >
@@ -53,15 +58,22 @@
             时长:&nbsp;&nbsp;<span>{{ min }}:{{ sec }}</span>
           </p>
         </div>
-        <div class="flex w-full mt-3" style="max-height: max-content">
-          <el-button
+        <div class="flex w-full mt-5" style="max-height: max-content">
+          <div
             @click="PlaySongTo"
-            class="w-20"
-            style="height: 35px"
-            size="small"
-            type="success"
-            >播放</el-button
+            class="relative SvgIconBox cursor-pointer"
+            style="width: 110px; height: 32px"
           >
+            <svg-icon
+              icon-class="playCircle"
+              class="absolute left-1/2 top-1/2"
+              style="
+                width: 20px;
+                height: 20px;
+                transform: translate3d(-50%, -50%, 0);
+              "
+            ></svg-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -502,5 +514,22 @@ export default {
 }
 .topinfo:hover {
   color: var(--primary-color);
+}
+.SvgIconBox {
+  background-color: #84fab0;
+  color: white;
+  transition-property: all;
+  transition-timing-function: ease-out;
+  transition-duration: 150ms;
+  border-radius: 50px;
+  box-shadow: rgb(107, 114, 128) 0 10px 20px -10px;
+}
+.SvgIconBox:hover {
+  transition-property: all;
+  transition-timing-function: ease-out;
+  transition-duration: 150ms;
+  color: black;
+  box-shadow: none;
+  background-color: #84fab0;
 }
 </style>

@@ -16,12 +16,11 @@
 </template>
 <script>
 import AsMenuList from "./AsMenuList.vue";
-import AsideMenuList from "./AsideMenuList.vue";
 import Logo from "./Logo.vue";
 export default {
   name: "AsideMenu",
   props: {},
-  components: { AsideMenuList, Logo, AsMenuList },
+  components: { Logo, AsMenuList },
   data() {
     return {
       asideOnlineMusic: [

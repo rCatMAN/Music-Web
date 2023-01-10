@@ -1,45 +1,100 @@
 <template>
-  <div>
-    <div class="top_box">
-      <div style="width: 25px"></div>
-      <div class="demo-image">
-        <el-image
-          style="width: 200px; height: 200px; border-radius: 15px"
-          :src="url"
-          fit="fill"
-        ></el-image>
-      </div>
-      <div class="top_menu">
-        <h1>{{ title }}</h1>
-        <div class="user_box">
-          <el-avatar size="small" :src="circleUrl"></el-avatar>
-          <h2>{{ username }}</h2>
+  <div style="margin-left: 50px; margin-top: 40px">
+    <div v-if="playListDetail" class="top_box flex" style="min-width: 800px">
+      <el-image
+        style="
+          min-width: 250px;
+          width: 250px;
+          height: 250px;
+          border-radius: 15px;
+          box-shadow: rgb(107 114 128) 0 10px 40px -5px;
+        "
+        :src="playListDetail.coverImgUrl"
+        fit="fill"
+      >
+      </el-image>
+      <div class="top_menu mt-3" style="width: 700px; margin-left: 3%">
+        <span class="text-4xl font-semibold">{{ playListDetail.name }}</span>
+        <div class="flex items-center mt-6">
+          <el-avatar
+            size="small"
+            :src="playListDetail.creator.avatarUrl"
+          ></el-avatar>
+          <span class="ml-3 text-sm">{{
+            playListDetail.creator.nickname
+          }}</span>
+          <div class="ml-10">
+            <span
+              v-for="(item, index) in playListDetail.tags"
+              :key="index"
+              class="ml-4 text-xs text-gray-500"
+              >#{{ item }}</span
+            >
+          </div>
         </div>
-        <h3>{{ subtitle }}</h3>
-        <div class="top_button_box">
-          <el-button size="small" type="success" round>播放全部</el-button>
-          <el-button size="small" type="success" round>收藏</el-button>
-          <el-button size="small" type="success" round>...</el-button>
+        <div class="mt-5 text-xs text-gray-500 truncate" style="width: 650px">
+          <span>{{ playListDetail.description }}</span>
+        </div>
+        <div class="button-box mt-10 flex" style="width: 400px">
+          <div
+            class="relative SvgIconBox cursor-pointer"
+            style="width: 110px; height: 32px"
+          >
+            <svg-icon
+              icon-class="playCircle"
+              class="absolute left-1/2 top-1/2"
+              style="
+                width: 20px;
+                height: 20px;
+                transform: translate3d(-50%, -50%, 0);
+              "
+            ></svg-icon>
+          </div>
+          <div
+            @click="toLike"
+            class="relative SvgIconBox cursor-pointer ml-8"
+            style="width: 110px; height: 32px"
+          >
+            <svg-icon
+              :icon-class="this.isLiked ? 'liked' : 'like'"
+              class="absolute left-1/2 top-1/2"
+              style="
+                width: 20px;
+                height: 20px;
+                transform: translate3d(-50%, -50%, 0);
+              "
+              :style="{
+                color: this.isLiked ? '#ff9a9e' : '',
+              }"
+            ></svg-icon>
+          </div>
         </div>
       </div>
     </div>
-    <div style="height: 10px"></div>
-    <el-menu
-      default-active="/playlist/list"
-      class="el-menu-demo"
-      mode="horizontal"
-      background-color="#E9EEF3"
-      text-color="#000000"
-      active-text-color="#00FA9A"
-      router
+    <div
+      class="flex items-center justify-around relative mt-8"
+      style="width: 250px"
     >
-      <el-menu-item v-for="m in menu" :key="m.id" :index="m.id">
-        <span slot="title">{{ m.title }}</span>
-      </el-menu-item>
-    </el-menu>
-
+      <div
+        @click="changeSelected(index, item.path)"
+        class="relative mt-7 mb-7 Menu cursor-pointer"
+        v-for="(item, index) in listMenu"
+        :key="index"
+      >
+        <span>
+          {{ item.title }}
+        </span>
+        <span v-if="index === 0 && playListDetail">{{
+          playListDetail.trackIds.length
+        }}</span>
+        <span v-if="index === 1 && playListDetail">{{
+          playListDetail.commentCount
+        }}</span>
+      </div>
+      <div class="selectedMenu absolute" :style="{ left: selectLeft }"></div>
+    </div>
     <transition name="el-zoom-in-center">
-      <router-view></router-view>
+      <router-view class=""></router-view>
     </transition>
   </div>
 </template>
@@ -48,72 +103,97 @@
 export default {
   data() {
     return {
-      url: this.$route.query.topInfo.src,
-      circleUrl:
-        "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-      title: this.$route.query.topInfo.title,
-      username: "猫猫音乐官方歌单",
-      subtitle: this.$route.query.topInfo.subtitle,
-      menu: [
-        { id: "/playlist/list", title: "歌曲" },
-        { id: "/playlist/comments", title: "评论" },
+      isLiked: 0,
+      selectLeft: "47.5px",
+      id: this.$route.query.id,
+      picUrl: null,
+      listMenu: [
+        { path: "/playlist/list", title: "歌曲" },
+        { path: "/playlist/comments", title: "评论" },
       ],
+      playListDetail: null,
     };
   },
+  computed: {
+    selectIndex() {
+      if (this.$route.path === "/playlist/comments") {
+        return 1;
+      } else if (this.$route.path === "/playlist/list") {
+        return 0;
+      }
+    },
+  },
   props: [],
-  methods: {},
+  watch: {
+    selectIndex: {
+      handler(n) {
+        switch (n) {
+          case 0:
+            this.selectLeft = "47.5px";
+            break;
+          case 1:
+            this.selectLeft = "172px";
+            break;
+        }
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    toLike() {
+      this.isLiked = !this.isLiked;
+      console.log("this.isLiked: ", this.isLiked);
+    },
+    changeSelected(index, path) {
+      this.$router.push({
+        path: path,
+        query: {
+          id: this.id,
+        },
+      });
+    },
+  },
   mounted() {
-    console.log("钩子获取到的路由参数", this.$route.query.topInfo);
+    console.log("router", this.$route);
+    //获取歌单信息
+    this.$axios({
+      method: "GET",
+      url: `http://localhost:3000/playlist/detail?id=${this.id}`,
+    }).then((response) => {
+      console.log("歌单信息: ", response);
+      this.playListDetail = response.data.playlist;
+    });
   },
 };
 </script>
 
 <style scoped>
-.top_box {
-  display: flex;
-  width: 100%;
-  height: 200px;
+.SvgIconBox {
+  background-color: #84fab0;
+  color: white;
+  transition-property: all;
+  transition-timing-function: ease-out;
+  transition-duration: 150ms;
+  border-radius: 50px;
+  box-shadow: rgb(107, 114, 128) 0 10px 20px -10px;
 }
-.top_menu {
-  display: flex;
-  width: 800px;
-  height: 200px;
-  flex-direction: column;
-  align-items: flex-start;
+.SvgIconBox:hover {
+  transition-property: all;
+  transition-timing-function: ease-out;
+  transition-duration: 150ms;
+  color: #ff9a9e;
+  box-shadow: none;
+  background-color: #84fab0;
 }
-h1 {
-  font-size: 30px;
-  margin-bottom: 20px;
-  margin-left: 16px;
-  margin-top: 20px;
+.Menu:hover {
+  color: var(--primary-color);
 }
-h2 {
-  font-size: 10px;
-  font-weight: 600;
-  margin-left: 10px;
-}
-.user_box {
-  display: flex;
-  flex-direction: row;
-  height: 30px;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.el-avatar {
-  margin-left: 16px;
-}
-h3 {
-  font-size: 10px;
-  font-weight: lighter;
-  line-height: 20px;
-  margin-left: 16px;
-  margin-bottom: 15px;
-}
-.top_button_box {
-  display: flex;
-  margin-left: 16px;
-}
-.el-menu-demo {
-  left: 25px;
+.selectedMenu {
+  transition: all 0.3s ease-in-out;
+  bottom: 10px;
+  height: 3px;
+  width: 30px;
+  border-radius: 50px;
+  background-color: var(--primary-color);
 }
 </style>

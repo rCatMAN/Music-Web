@@ -54,6 +54,15 @@ export default {
 .primary-color__hover:hover {
   color: var(--primary-color);
 }
+.grayText {
+  color: var(--gary-text);
+  font-size: 0.875rem /* 14px */;
+  line-height: 1.25rem /* 20px */;
+}
+.contentText {
+  font-size: 0.875rem /* 14px */;
+  line-height: 1.25rem /* 20px */;
+}
 .primary-pic-scale > img {
   transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
   transform: scale(1);

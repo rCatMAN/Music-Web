@@ -242,6 +242,7 @@ export default {
       handler(newid, oldid) {
         if (newid != oldid) {
           console.log("id有变化", newid, oldid);
+          this.lyric = null;
           //获取当前播放歌曲信息
           this.$axios({
             method: "GET",
@@ -260,7 +261,9 @@ export default {
             this.lyric.forEach((data) => {
               let arr2 = data.split("]");
               let str = arr2[0].slice(1, 8);
-              arry.push({ value: str, name: arr2[1] });
+              if (arr2[1] != "") {
+                arry.push({ value: str, name: arr2[1] });
+              }
             });
             this.lyric = arry;
             console.log("arry: ", arry);

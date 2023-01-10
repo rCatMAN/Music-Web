@@ -86,7 +86,6 @@ export default new createRouter({
 
                     ]
                 },
-
                 {
                     path: '/singerdetail',
                     component: SingerDetail,
@@ -166,8 +165,6 @@ export default new createRouter({
             component: Player,
             meta: { index: 1 }
         },
-
-
     ]
 })
 

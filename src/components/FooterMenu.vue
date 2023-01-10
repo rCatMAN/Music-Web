@@ -55,7 +55,7 @@
           left: !isPlayerPage
             ? `calc(((100vw - 200px)* ${Progress}) - 4px)`
             : `calc((100vw * ${Progress}) - 4px)`,
-          opacity: selectedIndex === 2 ? '1' : '0',
+          opacity: selectedIndex === 2 || IsDragging ? '1' : '0',
         }"
       >
       </span>
@@ -490,6 +490,7 @@ export default {
     },
     //拖动进度条功能
     MouseListenerEvent(event) {
+      document.body.style["user-select"] = "none";
       let PbarObj = this.$refs.Pbar.getBoundingClientRect();
       this.IsDragging = true;
       if (this.isPlayerPage) {
@@ -519,6 +520,7 @@ export default {
             ((PbarX - 200) / PbarObj.width) * _this.TotalTime.CalcTime
           );
         }
+        document.body.style["user-select"] = "text";
         document.body.removeEventListener(
           "mousemove",
           _this.MouseListenerEvent

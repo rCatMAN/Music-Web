@@ -301,7 +301,7 @@ export default {
 
       this.$router.push({
         path: `/songdetail`,
-        query: { id },
+        query: { idb },
       });
     },
   },
