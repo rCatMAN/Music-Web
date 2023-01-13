@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div class="flex h-16 items-center justify-center">
-      <h2 class="text-2xl font-bold" style="transform: translateX(-20px)">
+  <div class="">
+    <div class="flex h-16 items-center justify-center mt-8">
+      <h2 class="text-2xl font-bold mb-10" style="transform: translateX(-20px)">
         {{ Title }}
       </h2>
     </div>
     <div
-      class="flex justify-between max-w-7xl mt-0 mr-auto ml-auto"
-      style="min-width: 1000px"
+      class="flex justify-between "
+      style="min-width: 1200px;margin-left:auto;margin-right:auto;max-width: 1300px;transform: translateX(5px);"
     >
       <div v-for="(item, index) in detailArr" :key="item.id" style="width: 20%">
         <div class="overflow-hidden w-52 h-52">
@@ -54,6 +54,7 @@
           </h1>
           <div class="flex justify-between w-52">
             <p
+            @click="pushToSingerPage(itemm.id)"
               v-for="(itemm, indexx) in item.artists"
               :key="indexx"
               class="text-xs font-thin mt-2 title"
@@ -106,6 +107,14 @@ export default {
           break;
       }
     },
+    pushToSingerPage(id){
+      this.$router.push({
+            path: `/singerdetail/choiceness`,
+            query: {
+              id: id,
+            },
+          });
+    }
   },
 };
 </script>

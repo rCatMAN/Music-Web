@@ -2,7 +2,7 @@
   <div id="app">
     <transition :name="transitionName" :mode="mode">
       <keep-alive include="player">
-        <router-view class="child-view"></router-view>
+        <router-view v-if="isReload" class="child-view"></router-view>
       </keep-alive>
     </transition>
     <FooterMenu v-if="!isLoginPage" />
@@ -22,9 +22,26 @@ export default {
     return {
       transitionName: "down-up",
       mode: "in-out",
+      isReload: true
     };
   },
+  provide() {
+    return {
+      reload: this.reload,
+    }
+  },
+  methods: {
+    reload() {
+      this.isReload = false
+      this.$nextTick(() => {
+        this.isReload = true
+      })
+    },
+  },
   computed: {
+
+
+
     isLoginPage() {
       if (this.$route.path === "/login") {
         return true;
@@ -51,23 +68,36 @@ export default {
 .primary-color {
   color: var(--primary-color);
 }
+
 .primary-color__hover:hover {
   color: var(--primary-color);
 }
+
 .grayText {
   color: var(--gary-text);
-  font-size: 0.875rem /* 14px */;
-  line-height: 1.25rem /* 20px */;
+  font-size: 0.875rem
+    /* 14px */
+  ;
+  line-height: 1.25rem
+    /* 20px */
+  ;
 }
+
 .contentText {
-  font-size: 0.875rem /* 14px */;
-  line-height: 1.25rem /* 20px */;
+  font-size: 0.875rem
+    /* 14px */
+  ;
+  line-height: 1.25rem
+    /* 20px */
+  ;
 }
-.primary-pic-scale > img {
+
+.primary-pic-scale>img {
   transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
   transform: scale(1);
 }
-.primary-pic-scale > img:hover {
+
+.primary-pic-scale>img:hover {
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   transform: scale(1.1);
 }
@@ -80,11 +110,13 @@ export default {
   height: 100%;
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
+
 .slide-left-enter,
 .slide-right-leave-active {
   opacity: 0;
   transform: translate(0, 100%);
 }
+
 .slide-left-leave-active,
 .slide-right-enter {
   opacity: 0;

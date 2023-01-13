@@ -23,6 +23,7 @@ export default {
 
 <style scoped>
 .SvgIconBox {
+  user-select: none;
   transition-property: all;
   transition-timing-function: ease-out;
   transition-duration: 150ms;
@@ -36,5 +37,8 @@ export default {
   color: white;
   box-shadow: none;
   background-color: #84fab0;
+}
+.SvgIconBox:active{
+  transform: scale(0.86);
 }
 </style>

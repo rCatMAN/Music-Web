@@ -100,7 +100,9 @@
 </template>
 
 <script>
+
 export default {
+  components:{  } ,
   data() {
     return {
       isLiked: 0,
@@ -154,7 +156,6 @@ export default {
     },
   },
   mounted() {
-    console.log("router", this.$route);
     //获取歌单信息
     this.$axios({
       method: "GET",
@@ -169,6 +170,7 @@ export default {
 
 <style scoped>
 .SvgIconBox {
+  user-select: none;
   background-color: #84fab0;
   color: white;
   transition-property: all;
@@ -184,6 +186,9 @@ export default {
   color: #ff9a9e;
   box-shadow: none;
   background-color: #84fab0;
+}
+.SvgIconBox:active{
+  transform: scale(0.86);
 }
 .Menu:hover {
   color: var(--primary-color);

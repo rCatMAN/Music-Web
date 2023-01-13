@@ -5,7 +5,7 @@
         <th class="songList">歌曲</th>
         <th class="otherList">歌手</th>
         <th class="otherList">专辑</th>
-        <th class="otherList">时长</th>
+        <th class="timeList">时长</th>
       </tr>
       <tr
         v-for="(item, index) in playListSong"
@@ -28,7 +28,7 @@
             >{{ itemm.name }}</span
           >
         </td>
-        <td class="otherList truncate">
+        <td class="timeList truncate">
           <span class="textList">{{ item.al.name }}</span>
         </td>
         <td><span>3:29</span></td>
@@ -46,6 +46,7 @@ export default {
     };
   },
   methods: {
+
     toSongPage(id) {
       this.$router.push({
         path: `/songdetail`,
@@ -56,7 +57,7 @@ export default {
     },
     toSingerPage(id) {
       this.$router.push({
-        path: `/singerdetail`,
+        path: `/singerdetail/choiceness`,
         query: {
           id: id,
         },
@@ -88,6 +89,11 @@ export default {
   width: 250px;
   min-width: 85px;
   max-width: 250px;
+}
+.timeList{
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .songTr:hover {
   background: rgba(107, 114, 128, 0.06);

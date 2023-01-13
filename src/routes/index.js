@@ -17,6 +17,11 @@ import SearchLyrics from "../pages/home/search/lyrics"
 import Player from "../pages/home/player"
 //歌手详情页面
 import SingerDetail from "../pages/home/singerdetail"
+import singeralbum from "../pages/home/singerdetail/album"
+import singerchoiceness from "../pages/home/singerdetail/choiceness"
+import singerdetail from "../pages/home/singerdetail/detail"
+import singersongs from "../pages/home/singerdetail/songs"
+import singervideos from "../pages/home/singerdetail/video"
 //歌曲详情页面
 import Songdetail from "../pages/home/songdetail"
 //歌单
@@ -41,8 +46,6 @@ import Home from "@/pages/home"
 
 
 import createRouter from "vue-router"
-
-
 
 export default new createRouter({
     routes: [
@@ -89,6 +92,29 @@ export default new createRouter({
                 {
                     path: '/singerdetail',
                     component: SingerDetail,
+                    children:[
+                        {
+                            path: 'choiceness',
+                            component: singerchoiceness,
+                        },
+                        {
+                            path: 'album',
+                            component: singeralbum,
+                        },
+                        {
+                            path: 'detail',
+                            component: singerdetail,
+                        },
+                        {
+                            path: 'songs',
+                            component: singersongs,
+                        },
+                        {
+                            path: 'videos',
+                            component:  singervideos,
+                        },
+                       
+                    ]
                 },
                 {
                     path: '/songdetail',

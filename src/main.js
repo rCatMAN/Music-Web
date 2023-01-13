@@ -13,13 +13,22 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './global.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './icons'
+import customButtom from '@/components/customButton'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 
+Vue.component('customButtom', customButtom)
+
 Vue.prototype.$axios = axios
 
+// 解决重复点击路由报错的BUG
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+return originalPush.call(this, location).catch((err) => err)
+
+}
 
 new Vue({
   render: h => h(App),

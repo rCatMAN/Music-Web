@@ -86,7 +86,7 @@
                 <div class="h-14" style="width: 168px">
                   <div class="mb-2" style="max-height: 20px">
                     <div
-                      @click="pushToPage(itemm.id)"
+                      @click="pushToSongPage(itemm.id)"
                       class="
                         truncate
                         cursor-pointer
@@ -106,7 +106,7 @@
                       <span
                         v-for="(itemmm, indexxx) in itemm.singer"
                         :key="indexxx"
-                        @click="pushToPage(itemmm.id)"
+                        @click="pushToSingerPage(itemmm.id)"
                         class="
                           cursor-pointer
                           text-sm
@@ -296,13 +296,21 @@ export default {
     mouseLeave() {
       this.SelectedIndex = null;
     },
-    pushToPage(id) {
-      console.log("id: ", id);
-
+    pushToSongPage(id) {
       this.$router.push({
         path: `/songdetail`,
-        query: { idb },
+        query: {
+          id:id 
+        } ,
       });
+    },
+    pushToSingerPage(id){
+      this.$router.push({
+        path:`/singerdetail/choiceness`,
+        query:{
+          id : id
+        }
+      })
     },
   },
 };

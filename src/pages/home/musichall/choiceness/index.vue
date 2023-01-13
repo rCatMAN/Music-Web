@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-carousel
-      class="mt-10"
+      class="mt-10 ml-auto mr-auto"
+      style="max-width:1240px;transform: translateX(-20px);"
       v-if="bannerDetails"
       trigger="click"
       :interval="6000"
