@@ -23,6 +23,7 @@
       </td>
       <td class="truncate" style="max-width: 200px; width: 200px">
         <span
+        @click="pushToSinerPage(itemm.id)"
           class="search_list cursor-pointer"
           v-for="(itemm, indexx) in item.artists"
           :key="indexx"
@@ -60,6 +61,14 @@ export default {
         },
       });
     },
+    pushToSinerPage(id){
+      this.$router.push({
+        path: `/singerdetail/choiceness`,
+        query: {
+          id:id,
+        },
+      });
+    }
   },
   mounted() {
     this.$axios({

@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="flex h-16 items-center justify-center mt-8">
+    <div v-if="Title" class="flex h-16 items-center justify-center mt-8">
       <h2 class="text-2xl font-bold mb-10" style="transform: translateX(-20px)">
         {{ Title }}
       </h2>
@@ -79,7 +79,11 @@ export default {
       selectedIndex: null,
     };
   },
-  props: ["detailArr", "Title"],
+  inject:["reload"],
+  props: {
+        "detailArr":{required:true},
+        "Title":{required:false},
+    },
   methods: {
     mouseEnter(index) {
       this.selectedIndex = index;
@@ -114,6 +118,7 @@ export default {
               id: id,
             },
           });
+          this.reload()
     }
   },
 };
