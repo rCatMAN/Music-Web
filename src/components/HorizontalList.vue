@@ -6,8 +6,14 @@
       </h2>
     </div>
     <div
-      class="flex justify-between "
-      style="min-width: 1200px;margin-left:auto;margin-right:auto;max-width: 1300px;transform: translateX(5px);"
+      class="flex justify-between"
+      style="
+        min-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1300px;
+        transform: translateX(5px);
+      "
     >
       <div v-for="(item, index) in detailArr" :key="item.id" style="width: 20%">
         <div class="overflow-hidden w-52 h-52">
@@ -54,7 +60,7 @@
           </h1>
           <div class="flex justify-between w-52">
             <p
-            @click="pushToSingerPage(itemm.id)"
+              @click="pushToSingerPage(itemm.id)"
               v-for="(itemm, indexx) in item.artists"
               :key="indexx"
               class="text-xs font-thin mt-2 title"
@@ -79,11 +85,11 @@ export default {
       selectedIndex: null,
     };
   },
-  inject:["reload"],
+  inject: ["reload"],
   props: {
-        "detailArr":{required:true},
-        "Title":{required:false},
-    },
+    detailArr: { required: true },
+    Title: { required: false },
+  },
   methods: {
     mouseEnter(index) {
       this.selectedIndex = index;
@@ -109,17 +115,24 @@ export default {
             },
           });
           break;
-      }
-    },
-    pushToSingerPage(id){
-      this.$router.push({
-            path: `/singerdetail/choiceness`,
+        case 2:
+          this.$router.push({
+            path: `/albumdetail`,
             query: {
-              id: id,
+              id: this.detailArr[i].id,
             },
           });
-          this.reload()
-    }
+      }
+    },
+    pushToSingerPage(id) {
+      this.$router.push({
+        path: `/singerdetail/choiceness`,
+        query: {
+          id: id,
+        },
+      });
+      this.reload();
+    },
   },
 };
 </script>

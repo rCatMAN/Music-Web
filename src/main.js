@@ -8,25 +8,33 @@ import VueRouter from 'vue-router';
 import store from './store'
 import "tailwindcss/tailwind.css";
 import axios from "axios";
+import VueCookies from "vue-cookies"
 
 import 'element-ui/lib/theme-chalk/index.css';
 import './global.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './icons'
 import customButtom from '@/components/customButton'
+import videoList from '@/components/videoList'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 
+
 Vue.component('customButtom', customButtom)
+Vue.component('videoList', videoList)
+
 
 Vue.prototype.$axios = axios
+Vue.prototype.$cookie = VueCookies
+
+
 
 // 解决重复点击路由报错的BUG
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
-return originalPush.call(this, location).catch((err) => err)
+  return originalPush.call(this, location).catch((err) => err)
 
 }
 

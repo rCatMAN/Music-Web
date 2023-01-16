@@ -30,6 +30,7 @@
         >
           <img class="w-5 h-5 mr-2" src="../../../assets/singer.png" />
           <span
+            @click="toSingerPage(item.id)"
             class="topinfo cursor-pointer"
             v-for="item in songDetail.ar"
             :key="item.id"
@@ -502,6 +503,14 @@ export default {
         path: `/player`,
       });
       this.$store.commit("ChangePlaySongId", { id: this.id });
+    },
+    toSingerPage(id) {
+      this.$router.push({
+        path: `/singerdetail/choiceness`,
+        query: {
+          id: id,
+        },
+      });
     },
   },
 };

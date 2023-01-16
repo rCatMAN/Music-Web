@@ -96,7 +96,6 @@
             </div>
             <div class="flex justify-around items-center mt-5 w-full">
               <div
-                @click="verify"
                 class="bg-white relative SvgIconBox cursor-pointer"
                 style="width: 50px; height: 50px"
               >
@@ -173,12 +172,19 @@ export default {
         },
       }).then((response) => {
         console.log("登录", response);
+        if (response.data.code === 200) {
+          document.cookie = JSON.stringify(response.data.cookie);
+          console.log("this.$cookie.keys();: ", this.$cookie.keys());
+        }
       });
     },
     verify() {
       this.$axios({
         method: "post",
         url: `http://localhost:3000/captcha/verify?phone=${this.phone}&captcha=${this.captcha}`,
+        Headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       }).then((response) => {
         console.log("验证验证码", response);
       });

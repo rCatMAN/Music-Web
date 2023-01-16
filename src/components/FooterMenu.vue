@@ -409,6 +409,7 @@ export default {
         this.$axios({
           method: "GET",
           url: `http://localhost:3000/song/url/v1?id=${newId}&level=${this.level}`,
+          withCredentials: true,
         }).then((response) => {
           this.$store.commit("NewHowler", { url: response.data.data[0].url });
         });

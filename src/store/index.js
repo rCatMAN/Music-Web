@@ -52,6 +52,6 @@ const store = new Vuex.Store({
             state.IsLoaded = false
             state.howl = _howl
         },
-    }
+    },
 })
 export default store
