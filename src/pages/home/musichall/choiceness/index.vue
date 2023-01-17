@@ -44,7 +44,7 @@ import HorizontalList from '@/components/HorizontalList.vue'
 import LeaderBoard from '@/components/LeaderBoard.vue'
 
 export default {
-  data () {
+  data() {
     return {
       playList: [],
       bannerDetails: null,
@@ -52,7 +52,7 @@ export default {
     }
   },
   components: { HorizontalList, LeaderBoard },
-  mounted () {
+  mounted() {
     // 精选歌单
     this.$axios({
       method: 'GET',

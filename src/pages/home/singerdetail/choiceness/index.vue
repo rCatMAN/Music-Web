@@ -80,7 +80,7 @@ import HorizontalList from '@/components/HorizontalList.vue'
 import similarSingerList from '@/components/similarSingerList'
 export default {
   components: { HorizontalList, similarSingerList },
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       hotSongsList: [],
@@ -94,7 +94,7 @@ export default {
   },
   inject: ['reload'],
   methods: {
-    toSongPage (id) {
+    toSongPage(id) {
       this.$router.push({
         path: '/songdetail',
         query: {
@@ -102,7 +102,7 @@ export default {
         }
       })
     },
-    toSingerPage (id) {
+    toSingerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {
@@ -112,7 +112,7 @@ export default {
       this.reload()
     }
   },
-  mounted () {
+  mounted() {
     // 获取歌手热门歌曲
     this.$axios({
       method: 'GET',

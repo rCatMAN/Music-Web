@@ -2,9 +2,9 @@
 /* eslint-disable eqeqeq */
 import './picker.scss'
 
-function debounce (handle, delay) {
+function debounce(handle, delay) {
   let timeout = null
-  return function () {
+  return function() {
     if (timeout) {
       clearTimeout(timeout)
       timeout = null
@@ -15,12 +15,12 @@ function debounce (handle, delay) {
   }
 }
 
-function getClientCenterY (elem) {
+function getClientCenterY(elem) {
   const { top, bottom } = elem.getBoundingClientRect()
   return (top + bottom) / 2
 }
 
-function normalizeOptions (options) {
+function normalizeOptions(options) {
   return options.map((option) => {
     switch (typeof option) {
       case 'string': {
@@ -35,11 +35,11 @@ function normalizeOptions (options) {
   })
 }
 
-function isTouchEvent (event) {
+function isTouchEvent(event) {
   return event.changedTouches || event.touches
 }
 
-function getEventXY (event) {
+function getEventXY(event) {
   if (isTouchEvent(event)) {
     return event.changedTouches[0] || event.touches[0]
   }
@@ -74,7 +74,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     const normalizedOptions = normalizeOptions(this.options)
 
     let innerIndex = normalizedOptions.findIndex(option => option.value == this.value)
@@ -107,7 +107,7 @@ export default {
       scrollMax: 0
     }
   },
-  mounted () {
+  mounted() {
     this.calculatePivots()
     this.top = this.findScrollByIndex(this.innerIndex)
     if (this.innerValue !== this.value) {
@@ -127,7 +127,7 @@ export default {
     this.$el.addEventListener('mouseup', this.onEnd)
     this.$el.addEventListener('mouseleave', this.onCancel)
   },
-  destroyed () {
+  destroyed() {
     this.$el.removeEventListener('touchstart', this.onStart)
     this.$el.removeEventListener('touchmove', this.onMove)
     this.$el.removeEventListener('touchend', this.onEnd)
@@ -142,7 +142,7 @@ export default {
     this.$el.removeEventListener('mouseleave', this.onCancel)
   },
   watch: {
-    value (value) {
+    value(value) {
       if ((value === null || value === undefined) && this.placeholder) {
         this.correction(-1)
         return
@@ -158,7 +158,7 @@ export default {
         this.correction(nextInnerIndex)
       }
     },
-    options (options) {
+    options(options) {
       const normalizedOptions = this.normalizedOptions = normalizeOptions(options)
 
       let internalIndex = normalizedOptions.findIndex(option => option.value == this.value)
@@ -178,13 +178,13 @@ export default {
     }
   },
   methods: {
-    resize () {
+    resize() {
       this.$nextTick(() => {
         this.calculatePivots()
         this.top = this.findScrollByIndex(this.innerIndex)
       })
     },
-    calculatePivots () {
+    calculatePivots() {
       const rotatorTop = this.$refs.list.getBoundingClientRect().top
       this.pivots = (this.$refs.items || []).map((item) => getClientCenterY(item) - rotatorTop).sort((a, b) => a - b)
       this.pivotMin = Math.min(...this.pivots)
@@ -195,10 +195,10 @@ export default {
       this.scrollMin = this.scrollOffsetTop - this.pivotMin
       this.scrollMax = this.scrollOffsetTop - this.pivotMax
     },
-    sanitizeInternalIndex (index) {
+    sanitizeInternalIndex(index) {
       return Math.min(Math.max(index, this.placeholder ? -1 : 0), this.normalizedOptions.length - 1)
     },
-    findIndexFromScroll (scroll) {
+    findIndexFromScroll(scroll) {
       let prevDiff = null
       let pivotIndex = 0
       this.pivots.forEach((pivot, i) => {
@@ -213,7 +213,7 @@ export default {
       }
       return pivotIndex
     },
-    findScrollByIndex (index) {
+    findScrollByIndex(index) {
       let pivotIndex = index
       if (this.placeholder || this.options.length === 0) {
         pivotIndex++
@@ -227,7 +227,7 @@ export default {
 
       return this.scrollOffsetTop - this.pivotMin
     },
-    onScroll (e) {
+    onScroll(e) {
       if (this.top >= this.scrollMin && e.deltaY < 0) return
       if (this.top <= this.scrollMax && e.deltaY > 0) return
       if (this.pivots.length === 1) return
@@ -253,10 +253,10 @@ export default {
 
       this.onAfterWheel()
     },
-    onAfterWheel: debounce(function () {
+    onAfterWheel: debounce(function() {
       this.correction(this.findIndexFromScroll(this.top))
     }, 200),
-    onStart (event) {
+    onStart(event) {
       if (event.cancelable) {
         event.preventDefault()
       }
@@ -268,7 +268,7 @@ export default {
       }
       this.isDragging = false
     },
-    onMove (e) {
+    onMove(e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -282,7 +282,7 @@ export default {
       }
       this.top = this.start[0] + diff * (isTouchEvent(e) ? this.touchSensitivity : this.dragSensitivity)
     },
-    onEnd (e) {
+    onEnd(e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -295,7 +295,7 @@ export default {
       this.isDragging = false
       this.isMouseDown = false
     },
-    onCancel (e) {
+    onCancel(e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -304,7 +304,7 @@ export default {
       this.isMouseDown = false
       this.isDragging = false
     },
-    handleClick (e) {
+    handleClick(e) {
       const touchInfo = getEventXY(e)
       const x = touchInfo.clientX
       const y = touchInfo.clientY
@@ -316,7 +316,7 @@ export default {
         this.correction(this.innerIndex + 1)
       }
     },
-    correction (index) {
+    correction(index) {
       const nextInnerIndex = this.sanitizeInternalIndex(index)
       const nextInnerValue = this.normalizedOptions[nextInnerIndex] && this.normalizedOptions[nextInnerIndex].value || null
       this.top = this.findScrollByIndex(nextInnerIndex)
@@ -339,7 +339,7 @@ export default {
       }, 100)
     }
   },
-  render (h) {
+  render(h) {
     let items = []
     if (this.placeholder) {
       items.push(h('div', {

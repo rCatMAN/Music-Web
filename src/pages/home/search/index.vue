@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       TopImgSrc:
         'https://y.qq.com/mediastyle/yqq/img/bg_search.jpg?max_age=2592000',
@@ -61,18 +61,18 @@ export default {
     }
   },
   watch: {
-    '$router.query.keywords': function (n, o) {
+    '$router.query.keywords': function(n, o) {
       console.log('fuck')
     }
   },
   methods: {
-    reloadRouterView () {
+    reloadRouterView() {
       this.isRouterAlive = false
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.isRouterAlive = true
       })
     },
-    PushTo () {
+    PushTo() {
       this.$router.push({
         path: '/search/song',
         query: {

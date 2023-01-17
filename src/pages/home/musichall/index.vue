@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'musichall',
-  data () {
+  data() {
     return {
       musicHallMenu: [
         { id: '/musichall/choiceness', title: '精选' },
@@ -38,7 +38,7 @@ export default {
     }
   },
   watch: {
-    selectIndex (n) {
+    selectIndex(n) {
       switch (n) {
         case 0:
           this.selectLeft = '25px'
@@ -65,7 +65,7 @@ export default {
     }
   },
   methods: {
-    changeSelected (index, id) {
+    changeSelected(index, id) {
       this.selectIndex = index
       this.$router.push({
         path: id

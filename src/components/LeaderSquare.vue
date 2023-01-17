@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       imgUrl:
         'http://y.qq.com/music/photo_new/T002R300x300M0000008IAML0V6eAM_3.jpg?max_age=2592000',
@@ -60,10 +60,10 @@ export default {
     }
   },
   methods: {
-    mouseEnter (index) {
+    mouseEnter(index) {
       this.selectedIndex = index
     },
-    mouseLeave () {
+    mouseLeave() {
       this.selectedIndex = null
     }
   }

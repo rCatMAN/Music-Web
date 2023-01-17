@@ -201,7 +201,7 @@ export default {
   components: { ScrollPicker },
   name: 'player',
   mixins: [],
-  data () {
+  data() {
     return {
       picker: null,
       loading: true,
@@ -211,11 +211,11 @@ export default {
     }
   },
   computed: {
-    id () {
+    id() {
       return this.$store.state.nowPlayingID
     },
     // 计算歌词滚动对比时间
-    PlayTime () {
+    PlayTime() {
       const time = this.$store.state.PlayTime
       if (time < 10) {
         return '00:0' + time.toFixed(1)
@@ -239,7 +239,7 @@ export default {
   },
   watch: {
     id: {
-      handler (newId, oldId) {
+      handler(newId, oldId) {
         if (newId !== oldId) {
           console.log('id有变化', newId, oldId)
           this.lyric = null
@@ -274,22 +274,22 @@ export default {
       immediate: true
     },
     // 歌词滚动----------------------------------------
-    picker (n) {
+    picker(n) {
       if (this.lyric) {
       }
     },
-    PlayTime (n) {
+    PlayTime(n) {
       this.picker = n
     },
     // -----------------------------------------------
-    songDetail (newValue, oldValue) {
+    songDetail(newValue, oldValue) {
       if (newValue != null) this.loading = false
     }
   },
-  mounted () {},
-  destroyed () {},
+  mounted() {},
+  destroyed() {},
   methods: {
-    back () {
+    back() {
       this.$router.back()
     }
   }

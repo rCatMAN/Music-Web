@@ -409,7 +409,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       simiPlayList: null,
       commentsTotal: null,
@@ -434,7 +434,7 @@ export default {
       circleUrl: ''
     }
   },
-  mounted () {
+  mounted() {
     // 获取单曲信息
     this.$axios({
       method: 'GET',
@@ -489,7 +489,7 @@ export default {
     })
   },
   methods: {
-    isShowLy () {
+    isShowLy() {
       if (this.ifShowNum === 1000) {
         this.ifShowNum = 13
         this.ifShowWord = '[展开]'
@@ -498,13 +498,13 @@ export default {
         this.ifShowWord = '[收起]'
       }
     },
-    PlaySongTo () {
+    PlaySongTo() {
       this.$router.push({
         path: '/player'
       })
       this.$store.commit('ChangePlaySongId', { id: this.id })
     },
-    toSingerPage (id) {
+    toSingerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {

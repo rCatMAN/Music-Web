@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       playListSong: null
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
 
-    toSongPage (id) {
+    toSongPage(id) {
       this.$router.push({
         path: '/songdetail',
         query: {
@@ -55,7 +55,7 @@ export default {
         }
       })
     },
-    toSingerPage (id) {
+    toSingerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {
@@ -64,7 +64,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     // 获取歌单中歌曲信息
     this.$axios({
       method: 'GET',

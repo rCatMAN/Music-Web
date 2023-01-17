@@ -61,7 +61,7 @@
 export default {
   name: 'HeaderMenu',
   props: {},
-  data () {
+  data() {
     return {
       popoverShow: false,
       circleUrl:
@@ -70,23 +70,23 @@ export default {
     }
   },
   computed: {
-    userName () {
+    userName() {
       return this.$store.state.user.userName
     }
   },
   methods: {
-    toLogin () {
+    toLogin() {
       this.$router.push({
         path: '/login'
       })
     },
-    forward () {
+    forward() {
       this.$router.forward()
     },
-    back () {
+    back() {
       this.$router.back()
     },
-    PushTo (keywords) {
+    PushTo(keywords) {
       this.$router.replace({
         path: '/search/song',
         query: {

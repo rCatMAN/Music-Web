@@ -44,16 +44,16 @@ export default {
   props: {
     videoList: { required: true }
   },
-  data () {
+  data() {
     return {
       selectedIndex: null
     }
   },
   methods: {
-    mouseLeave () {
+    mouseLeave() {
       this.selectedIndex = null
     },
-    mouseEnter (index) {
+    mouseEnter(index) {
       this.selectedIndex = index
     }
   }

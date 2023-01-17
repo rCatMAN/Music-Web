@@ -302,7 +302,7 @@ export default {
   name: 'FooterMenu',
   props: [],
   mixins: [],
-  data () {
+  data() {
     return {
       songDetail: null,
       loading: true,
@@ -357,33 +357,33 @@ export default {
     }
   },
   computed: {
-    howl () {
+    howl() {
       return this.$store.state.howl
     },
-    playingId () {
+    playingId() {
       return this.$store.state.nowPlayingID
     },
-    isPlaying () {
+    isPlaying() {
       return this.$store.state.isPlaying
     },
-    isPlayerPage () {
+    isPlayerPage() {
       if (this.$route.path === '/player') {
         return true
       } else {
         return false
       }
     },
-    IsLoaded () {
+    IsLoaded() {
       return this.$store.state.IsLoaded
     },
-    Progress () {
+    Progress() {
       if (this.TotalTime.CalcTime === 0) return 0
       return this.Seek / this.TotalTime.CalcTime
     }
   },
   watch: {
     playingId: {
-      handler (newId, oldId) {
+      handler(newId, oldId) {
         // 播放新音乐时将旧howler清除
         if (this.howl) {
           this.howl.unload()
@@ -416,14 +416,14 @@ export default {
       }
     },
     howl: {
-      handler (n) {
+      handler(n) {
         this.ChangePlayStatus()
       }
     },
-    IsLoaded () {
+    IsLoaded() {
       this.TotalTime.CalcTime = this.howl.duration()
     },
-    isPlaying (playing) {
+    isPlaying(playing) {
       // 播放时进度条调整
       if (playing) {
         this.CalcSeek.Seek.Id = setInterval(
@@ -434,7 +434,7 @@ export default {
         clearInterval(this.CalcSeek.Seek.Id)
       }
     },
-    ValueVolume (n) {
+    ValueVolume(n) {
       if (this.howl) {
         this.$store.commit('ChangeVolume', { Volume: n * 0.01 })
         if (n) {
@@ -443,12 +443,12 @@ export default {
         this.howl.volume(this.$store.state.Volume)
       }
     },
-    songDetail (newValue, oldValue) {
+    songDetail(newValue, oldValue) {
       if (newValue) this.loading = false
     }
   },
   methods: {
-    ChangePlayStatus () {
+    ChangePlayStatus() {
       if (this.howl) {
         if (this.isPlaying) {
           this.howl.pause()
@@ -461,25 +461,25 @@ export default {
         }
       }
     },
-    cleanHowler () {
+    cleanHowler() {
       this.howl.stop()
       this.$store.commit('CleanHowler')
     },
-    ToPlayerPage () {
+    ToPlayerPage() {
       this.$router.push({
         path: '/player'
       })
     },
-    mouseEnter (index) {
+    mouseEnter(index) {
       this.selectedIndex = index
     },
-    mouseLeave () {
+    mouseLeave() {
       this.selectedIndex = null
     },
-    Tolike () {
+    Tolike() {
       this.isLike = !this.isLike
     },
-    ChangeMute () {
+    ChangeMute() {
       if (this.howl != null) {
         if (!this.muteStatu) {
           this.muteStatu = true
@@ -491,7 +491,7 @@ export default {
       }
     },
     // 拖动进度条功能
-    MouseListenerEvent (event) {
+    MouseListenerEvent(event) {
       document.body.style['user-select'] = 'none'
       const PbarObj = this.$refs.Pbar.getBoundingClientRect()
       this.IsDragging = true
@@ -502,15 +502,15 @@ export default {
           ((event.clientX - 200) / PbarObj.width) * this.TotalTime.CalcTime
       }
     },
-    ChangeSeekAction () {
+    ChangeSeekAction() {
       if (this.howl != null) {
         document.body.addEventListener('mousemove', this.MouseListenerEvent)
       }
     }
   },
-  mounted () {
+  mounted() {
     const _this = this
-    document.body.addEventListener('mouseup', function (e) {
+    document.body.addEventListener('mouseup', function(e) {
       // 点击进度条后放开鼠标跳转进度功能
       if (_this.IsDragging) {
         const PbarObj = _this.$refs.Pbar.getBoundingClientRect()
@@ -531,7 +531,7 @@ export default {
       }
     })
   },
-  updated () {}
+  updated() {}
 }
 </script>
 

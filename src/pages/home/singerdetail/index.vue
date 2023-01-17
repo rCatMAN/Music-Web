@@ -38,7 +38,7 @@
 import routerMenu from '@/components/routerMenu'
 export default {
   components: { routerMenu },
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       singerDetailList: null,
@@ -53,7 +53,7 @@ export default {
     }
   },
   methods: {
-    changeSelected (index, path) {
+    changeSelected(index, path) {
       this.$router.push({
         path,
         query: {
@@ -62,7 +62,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     // 获取歌手详情
     this.$axios({
       method: 'GET',

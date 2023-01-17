@@ -46,14 +46,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       keywords: this.$route.query.keywords,
       tableData: null
     }
   },
   methods: {
-    PushTo (id) {
+    PushTo(id) {
       this.$router.push({
         path: '/songdetail',
         query: {
@@ -61,7 +61,7 @@ export default {
         }
       })
     },
-    pushToSinerPage (id) {
+    pushToSinerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {
@@ -70,7 +70,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.$axios({
       method: 'GET',
       url: `http://localhost:3000/search?keywords=${this.keywords}&offset=0&limit=20&type=1`

@@ -28,7 +28,7 @@ Vue.prototype.$cookie = VueCookies
 
 // 解决重复点击路由报错的BUG
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
+VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err)
 }
 
@@ -37,7 +37,7 @@ new Vue({
   router,
   components: {},
   store,
-  beforeCreate () {
+  beforeCreate() {
     Vue.prototype.$bus = this// 安装全局时间总线
   }
 

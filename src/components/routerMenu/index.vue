@@ -23,13 +23,13 @@ export default {
     content: { required: true },
     id: { required: false }
   },
-  data () {
+  data() {
     return {
       selectIndex: 0
     }
   },
   methods: {
-    toPage (path, index) {
+    toPage(path, index) {
       this.$router.push({
         path,
         query: {

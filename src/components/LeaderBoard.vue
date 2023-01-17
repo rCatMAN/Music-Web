@@ -132,13 +132,13 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       topList: [],
       SelectedIndex: null
     }
   },
-  mounted () {
+  mounted() {
     // 热歌榜
     this.$axios({
       method: 'GET',
@@ -290,13 +290,13 @@ export default {
     })
   },
   methods: {
-    mouseEnter (index) {
+    mouseEnter(index) {
       this.SelectedIndex = index
     },
-    mouseLeave () {
+    mouseLeave() {
       this.SelectedIndex = null
     },
-    pushToSongPage (id) {
+    pushToSongPage(id) {
       this.$router.push({
         path: '/songdetail',
         query: {
@@ -304,7 +304,7 @@ export default {
         }
       })
     },
-    pushToSingerPage (id) {
+    pushToSingerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {

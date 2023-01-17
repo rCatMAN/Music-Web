@@ -17,20 +17,20 @@ const store = new Vuex.Store({
     PlayTime: 0
   },
   mutations: {
-    ChangePlayTime (state, payload) {
+    ChangePlayTime(state, payload) {
       state.PlayTime = payload.PlayTime
     },
-    ChangeVolume (state, payload) {
+    ChangeVolume(state, payload) {
       state.Volume = payload.Volume
     },
-    ChangePlaySongId (state, payload) {
+    ChangePlaySongId(state, payload) {
       state.nowPlayingID = payload.id
       console.log('x的PlayingId改变,', state.nowPlayingID)
     },
-    ChangePlayState (state, payload) {
+    ChangePlayState(state, payload) {
       state.isPlaying = payload.isPlaying
     },
-    NewHowler (state, payload) {
+    NewHowler(state, payload) {
       const _howl = new Howl({
         format: 'mp3',
         src: payload.url,
@@ -40,10 +40,10 @@ const store = new Vuex.Store({
         preload: true,
         autoplay: false,
         mute: false,
-        onend () {
+        onend() {
           state.isPlaying = false
         },
-        onload () {
+        onload() {
           state.IsLoaded = true
         }
       })

@@ -103,7 +103,7 @@
 
 export default {
   components: { },
-  data () {
+  data() {
     return {
       isLiked: 0,
       selectLeft: '47.5px',
@@ -117,7 +117,7 @@ export default {
     }
   },
   computed: {
-    selectIndex () {
+    selectIndex() {
       if (this.$route.path === '/playlist/comments') {
         return 1
       } else if (this.$route.path === '/playlist/list') {
@@ -129,7 +129,7 @@ export default {
   props: [],
   watch: {
     selectIndex: {
-      handler (n) {
+      handler(n) {
         switch (n) {
           case 0:
             this.selectLeft = '47.5px'
@@ -143,11 +143,11 @@ export default {
     }
   },
   methods: {
-    toLike () {
+    toLike() {
       this.isLiked = !this.isLiked
       console.log('this.isLiked: ', this.isLiked)
     },
-    changeSelected (index, path) {
+    changeSelected(index, path) {
       this.$router.push({
         path,
         query: {
@@ -156,7 +156,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     // 获取歌单信息
     this.$axios({
       method: 'GET',

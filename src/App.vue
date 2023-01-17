@@ -16,7 +16,7 @@ export default {
   components: {
     FooterMenu
   },
-  data () {
+  data() {
     return {
       transitionName: 'down-up',
       mode: 'in-out',
@@ -24,13 +24,13 @@ export default {
       userInfo: null
     }
   },
-  provide () {
+  provide() {
     return {
       reload: this.reload
     }
   },
   methods: {
-    reload () {
+    reload() {
       this.isReload = false
       this.$nextTick(() => {
         this.isReload = true
@@ -38,7 +38,7 @@ export default {
     }
   },
   computed: {
-    isLoginPage () {
+    isLoginPage() {
       if (this.$route.path === '/login') {
         return true
       } else {
@@ -47,7 +47,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       if (to.meta.index === 1) {
         this.transitionName = 'slide-left'
         this.mode = ''

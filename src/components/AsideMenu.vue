@@ -21,7 +21,7 @@ export default {
   name: 'AsideMenu',
   props: {},
   components: { Logo, AsMenuList },
-  data () {
+  data() {
     return {
       asideOnlineMusic: [
         { id: '/recommend', title: '推荐', iconClass: 'star' },
@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    changeSelectIndex (index, id) {
+    changeSelectIndex(index, id) {
       this.selectIndex = index
       this.$router.push({
         path: id

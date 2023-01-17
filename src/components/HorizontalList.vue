@@ -79,7 +79,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       icon_PlaySrc: '../assets/playCircle.png',
       selectedIndex: null
@@ -91,13 +91,13 @@ export default {
     Title: { required: false }
   },
   methods: {
-    mouseEnter (index) {
+    mouseEnter(index) {
       this.selectedIndex = index
     },
-    mouseLeave () {
+    mouseLeave() {
       this.selectedIndex = null
     },
-    pushToPage (i) {
+    pushToPage(i) {
       switch (this.detailArr[0].type) {
         case 0:
           this.$router.push({
@@ -124,7 +124,7 @@ export default {
           })
       }
     },
-    pushToSingerPage (id) {
+    pushToSingerPage(id) {
       this.$router.push({
         path: '/singerdetail/choiceness',
         query: {

@@ -70,7 +70,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       hotCommentList: null,
@@ -78,7 +78,7 @@ export default {
       textarea: ''
     }
   },
-  mounted () {
+  mounted() {
     // 获取歌单中评论信息
     this.$axios({
       method: 'GET',

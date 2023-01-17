@@ -147,14 +147,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       phone: '',
       captcha: ''
     }
   },
   methods: {
-    SentCaptcha () {
+    SentCaptcha() {
       this.$axios({
         method: 'post',
         url: `http://localhost:3000/captcha/sent?phone=${this.phone}`
@@ -162,7 +162,7 @@ export default {
         console.log('发送验证码', response)
       })
     },
-    phonLogin () {
+    phonLogin() {
       this.$axios({
         method: 'post',
         url: 'http://localhost:3000/login/cellphone',
@@ -178,7 +178,7 @@ export default {
         }
       })
     },
-    verify () {
+    verify() {
       this.$axios({
         method: 'post',
         url: `http://localhost:3000/captcha/verify?phone=${this.phone}&captcha=${this.captcha}`,

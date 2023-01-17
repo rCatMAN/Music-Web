@@ -15,7 +15,7 @@
 export default {
   name: 'customButton',
   props: { content: { type: String, rerquired: false }, iconClass: { type: String, rerquired: false } },
-  data () {
+  data() {
     return {}
   }
 }
