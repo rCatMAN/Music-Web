@@ -22,8 +22,8 @@
           <h1 class="ml-2">{{ singerFans }}</h1>
         </div>
         <div class="flex mt-8">
-          <customButtom iconClass="like" content="关注" />
-          <customButtom class="ml-8" iconClass="radio" content="歌手电台" />
+          <customButton iconClass="like" content="关注" />
+          <customButton class="ml-8" iconClass="radio" content="歌手电台" />
         </div>
       </div>
     </div>
@@ -35,51 +35,50 @@
 </template>
 
 <script>
-import routerMenu from "@/components/routerMenu"
+import routerMenu from '@/components/routerMenu'
 export default {
-  components:{routerMenu},
-  data() {
+  components: { routerMenu },
+  data () {
     return {
       id: this.$route.query.id,
       singerDetailList: null,
       singerFans: null,
       listMenu: [
-        { path: "/singerdetail/choiceness", title: "精选" },
-        { path: "/singerdetail/songs", title: "歌曲" },
-        { path: "/singerdetail/album", title: "专辑" },
-        { path: "/singerdetail/videos", title: "视频" },
-        { path: "/singerdetail/detail", title: "详情" },
-      ],
+        { path: '/singerdetail/choiceness', title: '精选' },
+        { path: '/singerdetail/songs', title: '歌曲' },
+        { path: '/singerdetail/album', title: '专辑' },
+        { path: '/singerdetail/videos', title: '视频' },
+        { path: '/singerdetail/detail', title: '详情' }
+      ]
     }
   },
   methods: {
-    changeSelected(index, path) {
+    changeSelected (index, path) {
       this.$router.push({
-        path: path,
+        path,
         query: {
-          id: this.id,
-        },
-      });
-    },
+          id: this.id
+        }
+      })
+    }
   },
-  mounted() {
-    //获取歌手详情
+  mounted () {
+    // 获取歌手详情
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/artist/detail?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/artist/detail?id=${this.id}`
     }).then((response) => {
       this.singerDetailList = response.data.data.artist
-
-    });
-    //获取歌手粉丝
+    })
+    // 获取歌手粉丝
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/artist/follow/count?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/artist/follow/count?id=${this.id}`
     }).then((response) => {
       this.singerFans = response.data.data.fansCnt
-    });
+    })
   }
-};
+}
 </script>
 
 <style scoped>

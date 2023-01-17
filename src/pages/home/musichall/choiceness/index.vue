@@ -40,61 +40,61 @@
 </template>
 
 <script>
-import HorizontalList from "@/components/HorizontalList.vue";
-import LeaderBoard from "@/components/LeaderBoard.vue";
+import HorizontalList from '@/components/HorizontalList.vue'
+import LeaderBoard from '@/components/LeaderBoard.vue'
 
 export default {
-  data() {
+  data () {
     return {
       playList: [],
       bannerDetails: null,
-      newSongList: [],
-    };
+      newSongList: []
+    }
   },
   components: { HorizontalList, LeaderBoard },
-  mounted() {
-    //精选歌单
+  mounted () {
+    // 精选歌单
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/top/playlist/highquality&limit=5`,
+      method: 'GET',
+      url: 'http://localhost:3000/top/playlist/highquality&limit=5'
     }).then((response) => {
-      for (var i = 0; i < 5; i++) {
-        var arr = {
+      for (let i = 0; i < 5; i++) {
+        const arr = {
           name: response.data.playlists[i].name,
           artists: response.data.playlists[i].creator.nickname,
           picUrl: response.data.playlists[i].coverImgUrl,
           playCount: response.data.playlists[i].playCount,
           id: response.data.playlists[i].id,
-          type: 1,
-        };
-        this.playList.push(arr);
+          type: 1
+        }
+        this.playList.push(arr)
       }
-      console.log(" this.playList: ", this.playList);
-    });
+      console.log(' this.playList: ', this.playList)
+    })
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/banner?type=0`,
+      method: 'GET',
+      url: 'http://localhost:3000/banner?type=0'
     }).then((response) => {
-      this.bannerDetails = response.data.banners;
-    });
-    //新歌首发
+      this.bannerDetails = response.data.banners
+    })
+    // 新歌首发
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/top/song`,
+      method: 'GET',
+      url: 'http://localhost:3000/top/song'
     }).then((response) => {
-      for (var i = 0; i < 5; i++) {
-        var arr = {
+      for (let i = 0; i < 5; i++) {
+        const arr = {
           name: response.data.data[i].name,
           artists: response.data.data[i].artists,
           picUrl: response.data.data[i].album.picUrl,
           id: response.data.data[i].id,
-          type: 0,
-        };
-        this.newSongList.push(arr);
+          type: 0
+        }
+        this.newSongList.push(arr)
       }
-    });
-  },
-};
+    })
+  }
+}
 </script>
 
 <style scoped>

@@ -17,16 +17,16 @@
 
 <script>
 export default {
-  name: "similarSingerList",
+  name: 'similarSingerList',
   props: {
     singerList: {
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
-    return {};
-  },
-};
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style scoped>

@@ -44,45 +44,45 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       TopImgSrc:
-        "https://y.qq.com/mediastyle/yqq/img/bg_search.jpg?max_age=2592000",
+        'https://y.qq.com/mediastyle/yqq/img/bg_search.jpg?max_age=2592000',
       keywords: this.$route.query.keywords,
       menu: [
-        { path: "/search/song", title: "单曲" },
-        { path: "/search/album", title: "专辑" },
-        { path: "/search/mv", title: "MV" },
-        { path: "/search/playlist", title: "歌单" },
-        { path: "/search/user", title: "用户" },
-        { path: "/search/lyrics", title: "歌词" },
+        { path: '/search/song', title: '单曲' },
+        { path: '/search/album', title: '专辑' },
+        { path: '/search/mv', title: 'MV' },
+        { path: '/search/playlist', title: '歌单' },
+        { path: '/search/user', title: '用户' },
+        { path: '/search/lyrics', title: '歌词' }
       ],
-      isRouterAlive: true,
-    };
+      isRouterAlive: true
+    }
   },
   watch: {
-    "$router.query.keywords": function (n, o) {
-      console.log("fuck");
-    },
+    '$router.query.keywords': function (n, o) {
+      console.log('fuck')
+    }
   },
   methods: {
-    reloadRouterView() {
-      this.isRouterAlive = false;
+    reloadRouterView () {
+      this.isRouterAlive = false
       this.$nextTick(function () {
-        this.isRouterAlive = true;
-      });
+        this.isRouterAlive = true
+      })
     },
-    PushTo() {
+    PushTo () {
       this.$router.push({
-        path: `/search/song`,
+        path: '/search/song',
         query: {
-          keywords: this.keywords,
-        },
-      });
-      this.reloadRouterView();
-    },
-  },
-};
+          keywords: this.keywords
+        }
+      })
+      this.reloadRouterView()
+    }
+  }
+}
 </script>
 
 <style scoped>

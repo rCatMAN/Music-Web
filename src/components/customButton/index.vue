@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center w-full h-full">
             <svg-icon :icon-class="iconClass" class="left-1/2 top-1/2" style="
                 width: 20px;
-                height: 20px;"             
+                height: 20px;"
                 >
             </svg-icon>
             <span v-if="content" class=" left-1/2 top-1/2 text text-sm">{{ content }}</span>
@@ -13,12 +13,12 @@
 
 <script>
 export default {
-    name: "customButtom",
-    props: { content: { type: String, rerquired: false }, iconClass: { type: String, rerquired: false } },
-    data() {
-        return {}
-    }
-};
+  name: 'customButton',
+  props: { content: { type: String, rerquired: false }, iconClass: { type: String, rerquired: false } },
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style scoped >

@@ -39,42 +39,42 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       id: this.$route.query.id,
-      playListSong: null,
-    };
+      playListSong: null
+    }
   },
   methods: {
 
-    toSongPage(id) {
+    toSongPage (id) {
       this.$router.push({
-        path: `/songdetail`,
+        path: '/songdetail',
         query: {
-          id: id,
-        },
-      });
+          id
+        }
+      })
     },
-    toSingerPage(id) {
+    toSingerPage (id) {
       this.$router.push({
-        path: `/singerdetail/choiceness`,
+        path: '/singerdetail/choiceness',
         query: {
-          id: id,
-        },
-      });
-    },
+          id
+        }
+      })
+    }
   },
-  mounted() {
-    //获取歌单中歌曲信息
+  mounted () {
+    // 获取歌单中歌曲信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/playlist/track/all?id=${this.id}`
     }).then((response) => {
-      console.log("response: ", response);
-      this.playListSong = response.data.songs;
-    });
-  },
-};
+      console.log('response: ', response)
+      this.playListSong = response.data.songs
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

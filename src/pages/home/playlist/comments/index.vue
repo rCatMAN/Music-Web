@@ -70,26 +70,26 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       id: this.$route.query.id,
       hotCommentList: null,
       allCommentList: null,
-      textarea: "",
-    };
+      textarea: ''
+    }
   },
-  mounted() {
-    //获取歌单中评论信息
+  mounted () {
+    // 获取歌单中评论信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/comment/playlist?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/comment/playlist?id=${this.id}`
     }).then((response) => {
-      console.log("歌单评论信息: ", response);
-      this.hotCommentList = response.data.hotComments;
-      this.allCommentList = response.data.comments;
-    });
-  },
-};
+      console.log('歌单评论信息: ', response)
+      this.hotCommentList = response.data.hotComments
+      this.allCommentList = response.data.comments
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

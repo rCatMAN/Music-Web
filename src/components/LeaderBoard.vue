@@ -132,188 +132,188 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       topList: [],
-      SelectedIndex: null,
-    };
+      SelectedIndex: null
+    }
   },
-  mounted() {
-    //热歌榜
+  mounted () {
+    // 热歌榜
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=3778678&limit=3`,
+      method: 'GET',
+      url: 'http://localhost:3000/playlist/track/all?id=3778678&limit=3'
     }).then((response) => {
-      var arr = {
-        title: "热歌",
+      const arr = {
+        title: '热歌',
         song: [
           {
-            Number: "1",
+            Number: '1',
             SongName: response.data.songs[0].name,
             singer: response.data.songs[0].ar,
-            id: response.data.songs[0].id,
+            id: response.data.songs[0].id
           },
           {
-            Number: "2",
+            Number: '2',
             SongName: response.data.songs[1].name,
             singer: response.data.songs[2].ar,
-            id: response.data.songs[1].id,
+            id: response.data.songs[1].id
           },
           {
-            Number: "3",
+            Number: '3',
             SongName: response.data.songs[2].name,
             singer: response.data.songs[2].ar,
-            id: response.data.songs[2].id,
-          },
-        ],
-      };
-      this.topList.push(arr);
-    });
-    //新歌榜
+            id: response.data.songs[2].id
+          }
+        ]
+      }
+      this.topList.push(arr)
+    })
+    // 新歌榜
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=3779629&limit=3`,
+      method: 'GET',
+      url: 'http://localhost:3000/playlist/track/all?id=3779629&limit=3'
     }).then((response) => {
-      var arr = {
-        title: "新歌",
+      const arr = {
+        title: '新歌',
         song: [
           {
-            Number: "1",
+            Number: '1',
             SongName: response.data.songs[0].name,
             singer: response.data.songs[0].ar,
-            id: response.data.songs[0].id,
+            id: response.data.songs[0].id
           },
           {
-            Number: "2",
-            SongName: response.data.songs[1].name,
-            singer: response.data.songs[1].ar,
-            id: response.data.songs[1].id,
-          },
-          {
-            Number: "3",
-            SongName: response.data.songs[2].name,
-            singer: response.data.songs[2].ar,
-          },
-        ],
-      };
-      this.topList.push(arr);
-    });
-    //流行指数
-    this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=19723756&limit=3`,
-    }).then((response) => {
-      var arr = {
-        title: "流行指数",
-        song: [
-          {
-            Number: "1",
-            SongName: response.data.songs[0].name,
-            singer: response.data.songs[0].ar,
-            id: response.data.songs[0].id,
-          },
-          {
-            Number: "2",
+            Number: '2',
             SongName: response.data.songs[1].name,
             singer: response.data.songs[1].ar,
-            id: response.data.songs[1].id,
+            id: response.data.songs[1].id
           },
           {
-            Number: "3",
+            Number: '3',
             SongName: response.data.songs[2].name,
-            singer: response.data.songs[2].ar,
-            id: response.data.songs[2].id,
-          },
-        ],
-      };
-      this.topList.push(arr);
-    });
-    //欧美
+            singer: response.data.songs[2].ar
+          }
+        ]
+      }
+      this.topList.push(arr)
+    })
+    // 流行指数
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=2809513713&limit=3`,
+      method: 'GET',
+      url: 'http://localhost:3000/playlist/track/all?id=19723756&limit=3'
     }).then((response) => {
-      var arr = {
-        title: "欧美",
+      const arr = {
+        title: '流行指数',
         song: [
           {
-            Number: "1",
+            Number: '1',
             SongName: response.data.songs[0].name,
             singer: response.data.songs[0].ar,
-            id: response.data.songs[0].id,
+            id: response.data.songs[0].id
           },
           {
-            Number: "2",
+            Number: '2',
             SongName: response.data.songs[1].name,
             singer: response.data.songs[1].ar,
-            id: response.data.songs[1].id,
+            id: response.data.songs[1].id
           },
           {
-            Number: "3",
+            Number: '3',
             SongName: response.data.songs[2].name,
             singer: response.data.songs[2].ar,
-            id: response.data.songs[2].id,
-          },
-        ],
-      };
-      this.topList.push(arr);
-    });
-    //韩国
+            id: response.data.songs[2].id
+          }
+        ]
+      }
+      this.topList.push(arr)
+    })
+    // 欧美
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/track/all?id=745956260&limit=3`,
+      method: 'GET',
+      url: 'http://localhost:3000/playlist/track/all?id=2809513713&limit=3'
     }).then((response) => {
-      var arr = {
-        title: "韩国",
+      const arr = {
+        title: '欧美',
         song: [
           {
-            Number: "1",
+            Number: '1',
             SongName: response.data.songs[0].name,
             singer: response.data.songs[0].ar,
-            id: response.data.songs[0].id,
+            id: response.data.songs[0].id
           },
           {
-            Number: "2",
+            Number: '2',
             SongName: response.data.songs[1].name,
             singer: response.data.songs[1].ar,
-            id: response.data.songs[1].id,
+            id: response.data.songs[1].id
           },
           {
-            Number: "3",
+            Number: '3',
             SongName: response.data.songs[2].name,
             singer: response.data.songs[2].ar,
-            id: response.data.songs[2].id,
+            id: response.data.songs[2].id
+          }
+        ]
+      }
+      this.topList.push(arr)
+    })
+    // 韩国
+    this.$axios({
+      method: 'GET',
+      url: 'http://localhost:3000/playlist/track/all?id=745956260&limit=3'
+    }).then((response) => {
+      const arr = {
+        title: '韩国',
+        song: [
+          {
+            Number: '1',
+            SongName: response.data.songs[0].name,
+            singer: response.data.songs[0].ar,
+            id: response.data.songs[0].id
           },
-        ],
-      };
-      this.topList.push(arr);
-    });
+          {
+            Number: '2',
+            SongName: response.data.songs[1].name,
+            singer: response.data.songs[1].ar,
+            id: response.data.songs[1].id
+          },
+          {
+            Number: '3',
+            SongName: response.data.songs[2].name,
+            singer: response.data.songs[2].ar,
+            id: response.data.songs[2].id
+          }
+        ]
+      }
+      this.topList.push(arr)
+    })
   },
   methods: {
-    mouseEnter(index) {
-      this.SelectedIndex = index;
+    mouseEnter (index) {
+      this.SelectedIndex = index
     },
-    mouseLeave() {
-      this.SelectedIndex = null;
+    mouseLeave () {
+      this.SelectedIndex = null
     },
-    pushToSongPage(id) {
+    pushToSongPage (id) {
       this.$router.push({
-        path: `/songdetail`,
+        path: '/songdetail',
         query: {
-          id:id 
-        } ,
-      });
-    },
-    pushToSingerPage(id){
-      this.$router.push({
-        path:`/singerdetail/choiceness`,
-        query:{
-          id : id
+          id
         }
       })
     },
-  },
-};
+    pushToSingerPage (id) {
+      this.$router.push({
+        path: '/singerdetail/choiceness',
+        query: {
+          id
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

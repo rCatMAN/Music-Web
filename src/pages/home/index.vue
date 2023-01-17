@@ -22,12 +22,11 @@
 </template>
 
 <script>
-import AsideMenu from "@/components/AsideMenu.vue";
-import HeaderMenu from "@/components/HeaderMenu.vue";
-import FooterMenu from "@/components/FooterMenu.vue";
+import AsideMenu from '@/components/AsideMenu.vue'
+import HeaderMenu from '@/components/HeaderMenu.vue'
 export default {
-  components: { AsideMenu, HeaderMenu, FooterMenu },
-};
+  components: { AsideMenu, HeaderMenu }
+}
 </script>
 
 <style scoped>

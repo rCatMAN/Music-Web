@@ -10,56 +10,54 @@
 </template>
 
 <script>
-import Home from "./pages/home/index.vue";
-import FooterMenu from "./components/FooterMenu.vue";
+import FooterMenu from './components/FooterMenu.vue'
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    Home,
-    FooterMenu,
+    FooterMenu
   },
-  data() {
+  data () {
     return {
-      transitionName: "down-up",
-      mode: "in-out",
+      transitionName: 'down-up',
+      mode: 'in-out',
       isReload: true,
-      userInfo: null,
-    };
+      userInfo: null
+    }
   },
-  provide() {
+  provide () {
     return {
-      reload: this.reload,
-    };
+      reload: this.reload
+    }
   },
   methods: {
-    reload() {
-      this.isReload = false;
+    reload () {
+      this.isReload = false
       this.$nextTick(() => {
-        this.isReload = true;
-      });
-    },
+        this.isReload = true
+      })
+    }
   },
   computed: {
-    isLoginPage() {
-      if (this.$route.path === "/login") {
-        return true;
+    isLoginPage () {
+      if (this.$route.path === '/login') {
+        return true
       } else {
-        return false;
+        return false
       }
-    },
+    }
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       if (to.meta.index === 1) {
-        this.transitionName = "slide-left";
-        this.mode = "";
+        this.transitionName = 'slide-left'
+        this.mode = ''
       } else {
-        this.transitionName = "slide-right";
-        this.mode = "";
+        this.transitionName = 'slide-right'
+        this.mode = ''
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style>

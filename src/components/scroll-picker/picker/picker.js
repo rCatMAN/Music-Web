@@ -1,7 +1,8 @@
-import "./picker.scss"
+/* eslint-disable no-mixed-operators */
+/* eslint-disable eqeqeq */
+import './picker.scss'
 
-
-function debounce(handle, delay) {
+function debounce (handle, delay) {
   let timeout = null
   return function () {
     if (timeout) {
@@ -14,12 +15,12 @@ function debounce(handle, delay) {
   }
 }
 
-function getClientCenterY(elem) {
+function getClientCenterY (elem) {
   const { top, bottom } = elem.getBoundingClientRect()
   return (top + bottom) / 2
 }
 
-function normalizeOptions(options) {
+function normalizeOptions (options) {
   return options.map((option) => {
     switch (typeof option) {
       case 'string': {
@@ -29,17 +30,16 @@ function normalizeOptions(options) {
       case 'boolean': {
         return { value: option, name: `${option}` }
       }
-
     }
     return option
   })
 }
 
-function isTouchEvent(event) {
+function isTouchEvent (event) {
   return event.changedTouches || event.touches
 }
 
-function getEventXY(event) {
+function getEventXY (event) {
   if (isTouchEvent(event)) {
     return event.changedTouches[0] || event.touches[0]
   }
@@ -51,30 +51,30 @@ export default {
     value: null,
     options: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     dragSensitivity: {
       type: Number,
-      default: 1.7,
+      default: 1.7
     },
     touchSensitivity: {
       type: Number,
-      default: 1.7,
+      default: 1.7
     },
     scrollSensitivity: {
       type: Number,
-      default: 1,
+      default: 1
     },
     empty: {
       type: String,
-      default: 'No Items',
+      default: 'No Items'
     },
     placeholder: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
-  data() {
+  data () {
     const normalizedOptions = normalizeOptions(this.options)
 
     let innerIndex = normalizedOptions.findIndex(option => option.value == this.value)
@@ -104,10 +104,10 @@ export default {
 
       scrollOffsetTop: 0,
       scrollMin: 0,
-      scrollMax: 0,
+      scrollMax: 0
     }
   },
-  mounted() {
+  mounted () {
     this.calculatePivots()
     this.top = this.findScrollByIndex(this.innerIndex)
     if (this.innerValue !== this.value) {
@@ -127,7 +127,7 @@ export default {
     this.$el.addEventListener('mouseup', this.onEnd)
     this.$el.addEventListener('mouseleave', this.onCancel)
   },
-  destroyed() {
+  destroyed () {
     this.$el.removeEventListener('touchstart', this.onStart)
     this.$el.removeEventListener('touchmove', this.onMove)
     this.$el.removeEventListener('touchend', this.onEnd)
@@ -142,7 +142,7 @@ export default {
     this.$el.removeEventListener('mouseleave', this.onCancel)
   },
   watch: {
-    value(value) {
+    value (value) {
       if ((value === null || value === undefined) && this.placeholder) {
         this.correction(-1)
         return
@@ -158,7 +158,7 @@ export default {
         this.correction(nextInnerIndex)
       }
     },
-    options(options) {
+    options (options) {
       const normalizedOptions = this.normalizedOptions = normalizeOptions(options)
 
       let internalIndex = normalizedOptions.findIndex(option => option.value == this.value)
@@ -178,13 +178,13 @@ export default {
     }
   },
   methods: {
-    resize() {
+    resize () {
       this.$nextTick(() => {
         this.calculatePivots()
         this.top = this.findScrollByIndex(this.innerIndex)
       })
     },
-    calculatePivots() {
+    calculatePivots () {
       const rotatorTop = this.$refs.list.getBoundingClientRect().top
       this.pivots = (this.$refs.items || []).map((item) => getClientCenterY(item) - rotatorTop).sort((a, b) => a - b)
       this.pivotMin = Math.min(...this.pivots)
@@ -195,10 +195,10 @@ export default {
       this.scrollMin = this.scrollOffsetTop - this.pivotMin
       this.scrollMax = this.scrollOffsetTop - this.pivotMax
     },
-    sanitizeInternalIndex(index) {
+    sanitizeInternalIndex (index) {
       return Math.min(Math.max(index, this.placeholder ? -1 : 0), this.normalizedOptions.length - 1)
     },
-    findIndexFromScroll(scroll) {
+    findIndexFromScroll (scroll) {
       let prevDiff = null
       let pivotIndex = 0
       this.pivots.forEach((pivot, i) => {
@@ -213,7 +213,7 @@ export default {
       }
       return pivotIndex
     },
-    findScrollByIndex(index) {
+    findScrollByIndex (index) {
       let pivotIndex = index
       if (this.placeholder || this.options.length === 0) {
         pivotIndex++
@@ -227,7 +227,7 @@ export default {
 
       return this.scrollOffsetTop - this.pivotMin
     },
-    onScroll(e) {
+    onScroll (e) {
       if (this.top >= this.scrollMin && e.deltaY < 0) return
       if (this.top <= this.scrollMax && e.deltaY > 0) return
       if (this.pivots.length === 1) return
@@ -256,7 +256,7 @@ export default {
     onAfterWheel: debounce(function () {
       this.correction(this.findIndexFromScroll(this.top))
     }, 200),
-    onStart(event) {
+    onStart (event) {
       if (event.cancelable) {
         event.preventDefault()
       }
@@ -268,7 +268,7 @@ export default {
       }
       this.isDragging = false
     },
-    onMove(e) {
+    onMove (e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -282,7 +282,7 @@ export default {
       }
       this.top = this.start[0] + diff * (isTouchEvent(e) ? this.touchSensitivity : this.dragSensitivity)
     },
-    onEnd(e) {
+    onEnd (e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -295,7 +295,7 @@ export default {
       this.isDragging = false
       this.isMouseDown = false
     },
-    onCancel(e) {
+    onCancel (e) {
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -304,7 +304,7 @@ export default {
       this.isMouseDown = false
       this.isDragging = false
     },
-    handleClick(e) {
+    handleClick (e) {
       const touchInfo = getEventXY(e)
       const x = touchInfo.clientX
       const y = touchInfo.clientY
@@ -316,7 +316,7 @@ export default {
         this.correction(this.innerIndex + 1)
       }
     },
-    correction(index) {
+    correction (index) {
       const nextInnerIndex = this.sanitizeInternalIndex(index)
       const nextInnerValue = this.normalizedOptions[nextInnerIndex] && this.normalizedOptions[nextInnerIndex].value || null
       this.top = this.findScrollByIndex(nextInnerIndex)
@@ -337,64 +337,64 @@ export default {
           this.$emit('input', this.innerValue)
         }
       }, 100)
-    },
+    }
   },
-  render(h) {
+  render (h) {
     let items = []
     if (this.placeholder) {
-      items.push(h("div", {
+      items.push(h('div', {
         class: {
-          "vue-scroll-picker-item": true,
-          "-placeholder": true,
-          "-selected": this.innerIndex == -1,
+          'vue-scroll-picker-item': true,
+          '-placeholder': true,
+          '-selected': this.innerIndex == -1
         },
-        ref: "items",
+        ref: 'items',
         refInFor: true,
         domProps: {
-          innerHTML: this.placeholder,
-        },
+          innerHTML: this.placeholder
+        }
       }))
     } else if (this.normalizedOptions.length === 0 && this.placeholder === null) {
-      items.push(h("div", {
-        class: ["vue-scroll-picker-item", "-empty", "-selected"],
-        ref: "items",
+      items.push(h('div', {
+        class: ['vue-scroll-picker-item', '-empty', '-selected'],
+        ref: 'items',
         refInFor: true,
         domProps: {
-          innerHTML: this.empty,
-        },
+          innerHTML: this.empty
+        }
       }))
     }
 
     items = items.concat(this.normalizedOptions.map((option, index) => {
-      return h("div", {
+      return h('div', {
         class: {
-          "vue-scroll-picker-item": true,
-          "-selected": this.innerIndex == index,
+          'vue-scroll-picker-item': true,
+          '-selected': this.innerIndex == index
         },
         key: option.value,
-        ref: "items",
+        ref: 'items',
         refInFor: true,
         domProps: {
-          innerHTML: option.name,
-        },
+          innerHTML: option.name
+        }
       })
     }))
-    return h("div", { class: ["vue-scroll-picker"] }, [
-      h("div", { class: ["vue-scroll-picker-list"] }, [
-        h("div", {
+    return h('div', { class: ['vue-scroll-picker'] }, [
+      h('div', { class: ['vue-scroll-picker-list'] }, [
+        h('div', {
           ref: 'list',
           class: {
-            "vue-scroll-picker-list-rotator": true,
-            "-transition": this.transitioning,
+            'vue-scroll-picker-list-rotator': true,
+            '-transition': this.transitioning
           },
-          style: this.top !== null ? { top: `${this.top}px` } : {},
+          style: this.top !== null ? { top: `${this.top}px` } : {}
         }, items)
       ]),
-      h("div", { class: ["vue-scroll-picker-layer"] }, [
-        h("div", { class: ["top"], ref: "top" }),
-        h("div", { class: ["middle"], ref: "selection" }),
-        h("div", { class: ["bottom"], ref: "bottom" }),
-      ]),
+      h('div', { class: ['vue-scroll-picker-layer'] }, [
+        h('div', { class: ['top'], ref: 'top' }),
+        h('div', { class: ['middle'], ref: 'selection' }),
+        h('div', { class: ['bottom'], ref: 'bottom' })
+      ])
     ])
   }
 }

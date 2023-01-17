@@ -102,70 +102,71 @@
 <script>
 
 export default {
-  components:{  } ,
-  data() {
+  components: { },
+  data () {
     return {
       isLiked: 0,
-      selectLeft: "47.5px",
+      selectLeft: '47.5px',
       id: this.$route.query.id,
       picUrl: null,
       listMenu: [
-        { path: "/playlist/list", title: "歌曲" },
-        { path: "/playlist/comments", title: "评论" },
+        { path: '/playlist/list', title: '歌曲' },
+        { path: '/playlist/comments', title: '评论' }
       ],
-      playListDetail: null,
-    };
+      playListDetail: null
+    }
   },
   computed: {
-    selectIndex() {
-      if (this.$route.path === "/playlist/comments") {
-        return 1;
-      } else if (this.$route.path === "/playlist/list") {
-        return 0;
+    selectIndex () {
+      if (this.$route.path === '/playlist/comments') {
+        return 1
+      } else if (this.$route.path === '/playlist/list') {
+        return 0
       }
-    },
+      return null
+    }
   },
   props: [],
   watch: {
     selectIndex: {
-      handler(n) {
+      handler (n) {
         switch (n) {
           case 0:
-            this.selectLeft = "47.5px";
-            break;
+            this.selectLeft = '47.5px'
+            break
           case 1:
-            this.selectLeft = "172px";
-            break;
+            this.selectLeft = '172px'
+            break
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
-    toLike() {
-      this.isLiked = !this.isLiked;
-      console.log("this.isLiked: ", this.isLiked);
+    toLike () {
+      this.isLiked = !this.isLiked
+      console.log('this.isLiked: ', this.isLiked)
     },
-    changeSelected(index, path) {
+    changeSelected (index, path) {
       this.$router.push({
-        path: path,
+        path,
         query: {
-          id: this.id,
-        },
-      });
-    },
+          id: this.id
+        }
+      })
+    }
   },
-  mounted() {
-    //获取歌单信息
+  mounted () {
+    // 获取歌单信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/playlist/detail?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/playlist/detail?id=${this.id}`
     }).then((response) => {
-      console.log("歌单信息: ", response);
-      this.playListDetail = response.data.playlist;
-    });
-  },
-};
+      console.log('歌单信息: ', response)
+      this.playListDetail = response.data.playlist
+    })
+  }
+}
 </script>
 
 <style scoped>

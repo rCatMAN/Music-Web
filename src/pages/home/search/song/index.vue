@@ -46,40 +46,40 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       keywords: this.$route.query.keywords,
-      tableData: null,
-    };
-  },
-  methods: {
-    PushTo(id) {
-      this.$router.push({
-        path: `/songdetail`,
-        query: {
-          id,
-        },
-      });
-    },
-    pushToSinerPage(id){
-      this.$router.push({
-        path: `/singerdetail/choiceness`,
-        query: {
-          id:id,
-        },
-      });
+      tableData: null
     }
   },
-  mounted() {
-    this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/search?keywords=${this.keywords}&offset=0&limit=20&type=1`,
-    }).then((response) => {
-      console.log("搜索信息", response.data.result.songs);
-      this.tableData = response.data.result.songs;
-    });
+  methods: {
+    PushTo (id) {
+      this.$router.push({
+        path: '/songdetail',
+        query: {
+          id
+        }
+      })
+    },
+    pushToSinerPage (id) {
+      this.$router.push({
+        path: '/singerdetail/choiceness',
+        query: {
+          id
+        }
+      })
+    }
   },
-};
+  mounted () {
+    this.$axios({
+      method: 'GET',
+      url: `http://localhost:3000/search?keywords=${this.keywords}&offset=0&limit=20&type=1`
+    }).then((response) => {
+      console.log('搜索信息', response.data.result.songs)
+      this.tableData = response.data.result.songs
+    })
+  }
+}
 </script>
 
 <style>

@@ -42,22 +42,22 @@
 <script>
 export default {
   props: {
-    videoList: { required: true },
+    videoList: { required: true }
   },
-  data() {
+  data () {
     return {
-      selectedIndex: null,
-    };
+      selectedIndex: null
+    }
   },
   methods: {
-    mouseLeave() {
-      this.selectedIndex = null;
+    mouseLeave () {
+      this.selectedIndex = null
     },
-    mouseEnter(index) {
-      this.selectedIndex = index;
-    },
-  },
-};
+    mouseEnter (index) {
+      this.selectedIndex = index
+    }
+  }
+}
 </script>
 
 <style scoped>

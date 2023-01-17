@@ -147,50 +147,50 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      phone: "",
-      captcha: "",
-    };
+      phone: '',
+      captcha: ''
+    }
   },
   methods: {
-    SentCaptcha() {
+    SentCaptcha () {
       this.$axios({
-        method: "post",
-        url: `http://localhost:3000/captcha/sent?phone=${this.phone}`,
+        method: 'post',
+        url: `http://localhost:3000/captcha/sent?phone=${this.phone}`
       }).then((response) => {
-        console.log("发送验证码", response);
-      });
+        console.log('发送验证码', response)
+      })
     },
-    phonLogin() {
+    phonLogin () {
       this.$axios({
-        method: "post",
-        url: `http://localhost:3000/login/cellphone`,
+        method: 'post',
+        url: 'http://localhost:3000/login/cellphone',
         data: {
           phone: this.phone,
-          captcha: this.captcha,
-        },
-      }).then((response) => {
-        console.log("登录", response);
-        if (response.data.code === 200) {
-          document.cookie = JSON.stringify(response.data.cookie);
-          console.log("this.$cookie.keys();: ", this.$cookie.keys());
+          captcha: this.captcha
         }
-      });
+      }).then((response) => {
+        console.log('登录', response)
+        if (response.data.code === 200) {
+          document.cookie = JSON.stringify(response.data.cookie)
+          console.log('this.$cookie.keys();: ', this.$cookie.keys())
+        }
+      })
     },
-    verify() {
+    verify () {
       this.$axios({
-        method: "post",
+        method: 'post',
         url: `http://localhost:3000/captcha/verify?phone=${this.phone}&captcha=${this.captcha}`,
         Headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
+          'Access-Control-Allow-Origin': '*'
+        }
       }).then((response) => {
-        console.log("验证验证码", response);
-      });
-    },
-  },
-};
+        console.log('验证验证码', response)
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -266,4 +266,4 @@ export default {
   box-shadow: none;
   background-color: #84fab0;
 }
-</style>        
+</style>

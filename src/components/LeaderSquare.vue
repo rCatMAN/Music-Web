@@ -51,23 +51,23 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       imgUrl:
-        "http://y.qq.com/music/photo_new/T002R300x300M0000008IAML0V6eAM_3.jpg?max_age=2592000",
+        'http://y.qq.com/music/photo_new/T002R300x300M0000008IAML0V6eAM_3.jpg?max_age=2592000',
       menulist: [{ number: 1 }, { number: 2 }, { number: 3 }, { number: 4 }],
-      selectedIndex: null,
-    };
+      selectedIndex: null
+    }
   },
   methods: {
-    mouseEnter(index) {
-      this.selectedIndex = index;
+    mouseEnter (index) {
+      this.selectedIndex = index
     },
-    mouseLeave() {
-      this.selectedIndex = null;
-    },
-  },
-};
+    mouseLeave () {
+      this.selectedIndex = null
+    }
+  }
+}
 </script>
 
 <style scoped>

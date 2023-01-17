@@ -299,10 +299,10 @@
 
 <script>
 export default {
-  name: "FooterMenu",
+  name: 'FooterMenu',
   props: [],
   mixins: [],
-  data() {
+  data () {
     return {
       songDetail: null,
       loading: true,
@@ -310,230 +310,230 @@ export default {
       playStatu: false,
       muteStatu: false,
       TotalTime: {
-        DetailTime: "00:00",
-        CalcTime: 0,
+        DetailTime: '00:00',
+        CalcTime: 0
       },
       IsDragging: false,
       ValueVolume: 50,
       isLike: false,
       selectedIndex: null,
-      level: "standard",
-      NowTime: "00:00",
+      level: 'standard',
+      NowTime: '00:00',
       Seek: 0,
-      //计算播放时间
+      // 计算播放时间
       CalcSeek: {
         Seek: {
           Id: null,
           Interval: 1000 / 10, // 每秒十次
           Hook: () => {
             if (!this.IsDragging) {
-              this.Seek = this.howl.seek();
-              this.$store.commit("ChangePlayTime", { PlayTime: this.Seek });
+              this.Seek = this.howl.seek()
+              this.$store.commit('ChangePlayTime', { PlayTime: this.Seek })
             }
-            var s = parseInt(this.howl.seek());
-            var m = parseInt(this.howl.seek() / 60);
-            var ts = 0;
-            var tm = 0;
+            const s = parseInt(this.howl.seek())
+            const m = parseInt(this.howl.seek() / 60)
+            let ts = 0
+            let tm = 0
             if (s < 10) {
-              ts = "0" + s;
+              ts = '0' + s
             } else if (s >= 10 && s < 60) {
-              ts = s;
+              ts = s
             } else {
               if (s % 60 < 10) {
-                ts = "0" + (s % 60);
+                ts = '0' + (s % 60)
               } else {
-                ts = s % 60;
+                ts = s % 60
               }
             }
             if (m < 10) {
-              tm = "0" + m;
+              tm = '0' + m
             } else {
-              tm = m;
+              tm = m
             }
-            this.NowTime = tm + ":" + ts;
-          },
-        },
-      },
-    };
+            this.NowTime = tm + ':' + ts
+          }
+        }
+      }
+    }
   },
   computed: {
-    howl() {
-      return this.$store.state.howl;
+    howl () {
+      return this.$store.state.howl
     },
-    playingId() {
-      return this.$store.state.nowPlayingID;
+    playingId () {
+      return this.$store.state.nowPlayingID
     },
-    isPlaying() {
-      return this.$store.state.isPlaying;
+    isPlaying () {
+      return this.$store.state.isPlaying
     },
-    isPlayerPage() {
-      if (this.$route.path === "/player") {
-        return true;
+    isPlayerPage () {
+      if (this.$route.path === '/player') {
+        return true
       } else {
-        return false;
+        return false
       }
     },
-    IsLoaded() {
-      return this.$store.state.IsLoaded;
+    IsLoaded () {
+      return this.$store.state.IsLoaded
     },
-    Progress() {
-      if (this.TotalTime.CalcTime === 0) return 0;
-      return this.Seek / this.TotalTime.CalcTime;
-    },
+    Progress () {
+      if (this.TotalTime.CalcTime === 0) return 0
+      return this.Seek / this.TotalTime.CalcTime
+    }
   },
   watch: {
     playingId: {
-      handler(newId, oldId) {
-        //播放新音乐时将旧howler清除
-        if (this.howl != null) {
-          this.howl.unload();
-          this.Seek = 0;
-          console.log("暂停");
-          this.$store.commit("ChangePlayState", { isPlaying: false });
+      handler (newId, oldId) {
+        // 播放新音乐时将旧howler清除
+        if (this.howl) {
+          this.howl.unload()
+          this.Seek = 0
+          console.log('暂停')
+          this.$store.commit('ChangePlayState', { isPlaying: false })
         }
         this.$axios({
-          method: "GET",
-          url: `http://localhost:3000/song/detail?ids=${newId}`,
+          method: 'GET',
+          url: `http://localhost:3000/song/detail?ids=${newId}`
         }).then((response) => {
-          this.songDetail = response.data.songs[0];
+          this.songDetail = response.data.songs[0]
           this.TotalTime.DetailTime =
             (parseInt((this.songDetail.dt * 0.001) / 60) < 10
-              ? "0" + parseInt((this.songDetail.dt * 0.001) / 60)
+              ? '0' + parseInt((this.songDetail.dt * 0.001) / 60)
               : parseInt((this.songDetail.dt * 0.001) / 60)) +
-            ":" +
+            ':' +
             (parseInt((this.songDetail.dt * 0.001) % 60) < 10
-              ? "0" + parseInt((this.songDetail.dt * 0.001) % 60)
-              : parseInt((this.songDetail.dt * 0.001) % 60));
-        });
-        //取得音乐链接
+              ? '0' + parseInt((this.songDetail.dt * 0.001) % 60)
+              : parseInt((this.songDetail.dt * 0.001) % 60))
+        })
+        // 取得音乐链接
         this.$axios({
-          method: "GET",
+          method: 'GET',
           url: `http://localhost:3000/song/url/v1?id=${newId}&level=${this.level}`,
-          withCredentials: true,
+          withCredentials: true
         }).then((response) => {
-          this.$store.commit("NewHowler", { url: response.data.data[0].url });
-        });
-      },
+          this.$store.commit('NewHowler', { url: response.data.data[0].url })
+        })
+      }
     },
     howl: {
-      handler(n) {
-        this.ChangePlayStatus();
-      },
+      handler (n) {
+        this.ChangePlayStatus()
+      }
     },
-    IsLoaded() {
-      this.TotalTime.CalcTime = this.howl.duration();
+    IsLoaded () {
+      this.TotalTime.CalcTime = this.howl.duration()
     },
-    isPlaying(playing) {
+    isPlaying (playing) {
       // 播放时进度条调整
       if (playing) {
         this.CalcSeek.Seek.Id = setInterval(
           this.CalcSeek.Seek.Hook,
           this.CalcSeek.Seek.Interval
-        );
+        )
       } else {
-        clearInterval(this.CalcSeek.Seek.Id);
+        clearInterval(this.CalcSeek.Seek.Id)
       }
     },
-    ValueVolume(n) {
-      if (this.howl != null) {
-        this.$store.commit("ChangeVolume", { Volume: n * 0.01 });
-        if (n != 0) {
-          this.howl.mute(false);
+    ValueVolume (n) {
+      if (this.howl) {
+        this.$store.commit('ChangeVolume', { Volume: n * 0.01 })
+        if (n) {
+          this.howl.mute(false)
         }
-        this.howl.volume(this.$store.state.Volume);
+        this.howl.volume(this.$store.state.Volume)
       }
     },
-    songDetail(newValue, oldValue) {
-      if (newValue != null) this.loading = false;
-    },
+    songDetail (newValue, oldValue) {
+      if (newValue) this.loading = false
+    }
   },
   methods: {
-    ChangePlayStatus() {
-      if (this.howl)
+    ChangePlayStatus () {
+      if (this.howl) {
         if (this.isPlaying) {
-          this.howl.pause();
-          console.log("暂停");
-          this.$store.commit("ChangePlayState", { isPlaying: false });
+          this.howl.pause()
+          console.log('暂停')
+          this.$store.commit('ChangePlayState', { isPlaying: false })
         } else {
-          this.howl.play();
-          console.log("播放");
-          this.$store.commit("ChangePlayState", { isPlaying: true });
+          this.howl.play()
+          console.log('播放')
+          this.$store.commit('ChangePlayState', { isPlaying: true })
         }
+      }
     },
-    cleanHowler() {
-      this.howl.stop();
-      this.$store.commit("CleanHowler");
+    cleanHowler () {
+      this.howl.stop()
+      this.$store.commit('CleanHowler')
     },
-    ToPlayerPage() {
+    ToPlayerPage () {
       this.$router.push({
-        path: `/player`,
-      });
+        path: '/player'
+      })
     },
-    mouseEnter(index) {
-      this.selectedIndex = index;
+    mouseEnter (index) {
+      this.selectedIndex = index
     },
-    mouseLeave() {
-      this.selectedIndex = null;
+    mouseLeave () {
+      this.selectedIndex = null
     },
-    Tolike() {
-      this.isLike = !this.isLike;
+    Tolike () {
+      this.isLike = !this.isLike
     },
-    ChangeMute() {
+    ChangeMute () {
       if (this.howl != null) {
         if (!this.muteStatu) {
-          this.muteStatu = true;
-          this.howl.mute(true);
+          this.muteStatu = true
+          this.howl.mute(true)
         } else {
-          this.muteStatu = false;
-          this.howl.mute(false);
+          this.muteStatu = false
+          this.howl.mute(false)
         }
       }
     },
-    //拖动进度条功能
-    MouseListenerEvent(event) {
-      document.body.style["user-select"] = "none";
-      let PbarObj = this.$refs.Pbar.getBoundingClientRect();
-      this.IsDragging = true;
+    // 拖动进度条功能
+    MouseListenerEvent (event) {
+      document.body.style['user-select'] = 'none'
+      const PbarObj = this.$refs.Pbar.getBoundingClientRect()
+      this.IsDragging = true
       if (this.isPlayerPage) {
-        this.Seek = (event.clientX / PbarObj.width) * this.TotalTime.CalcTime;
+        this.Seek = (event.clientX / PbarObj.width) * this.TotalTime.CalcTime
       } else {
         this.Seek =
-          ((event.clientX - 200) / PbarObj.width) * this.TotalTime.CalcTime;
+          ((event.clientX - 200) / PbarObj.width) * this.TotalTime.CalcTime
       }
     },
-    ChangeSeekAction() {
+    ChangeSeekAction () {
       if (this.howl != null) {
-        document.body.addEventListener("mousemove", this.MouseListenerEvent);
+        document.body.addEventListener('mousemove', this.MouseListenerEvent)
       }
-    },
+    }
   },
-  mounted() {
-    var _this = this;
-    document.body.addEventListener("mouseup", function (e) {
-      //点击进度条后放开鼠标跳转进度功能
+  mounted () {
+    const _this = this
+    document.body.addEventListener('mouseup', function (e) {
+      // 点击进度条后放开鼠标跳转进度功能
       if (_this.IsDragging) {
-        let PbarObj = _this.$refs.Pbar.getBoundingClientRect();
-        let PbarX = e.clientX;
+        const PbarObj = _this.$refs.Pbar.getBoundingClientRect()
+        const PbarX = e.clientX
         if (_this.isPlayerPage) {
-          _this.howl.seek((PbarX / PbarObj.width) * _this.TotalTime.CalcTime);
+          _this.howl.seek((PbarX / PbarObj.width) * _this.TotalTime.CalcTime)
         } else {
           _this.howl.seek(
             ((PbarX - 200) / PbarObj.width) * _this.TotalTime.CalcTime
-          );
+          )
         }
-        document.body.style["user-select"] = "text";
+        document.body.style['user-select'] = 'text'
         document.body.removeEventListener(
-          "mousemove",
+          'mousemove',
           _this.MouseListenerEvent
-        );
-        _this.IsDragging = false;
+        )
+        _this.IsDragging = false
       }
-    });
+    })
   },
-  updated() {},
-};
+  updated () {}
+}
 </script>
-
 
 <style scoped>
 .slider {

@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import LeaderBoard from "@/components/LeaderBoard.vue";
-import LeaderSquare from "@/components/LeaderSquare.vue";
+import LeaderBoard from '@/components/LeaderBoard.vue'
+import LeaderSquare from '@/components/LeaderSquare.vue'
 export default {
   components: { LeaderBoard, LeaderSquare },
-  data() {
-    return {};
-  },
-};
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style scoped>

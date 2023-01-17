@@ -79,62 +79,62 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      icon_PlaySrc: "../assets/playCircle.png",
-      selectedIndex: null,
-    };
+      icon_PlaySrc: '../assets/playCircle.png',
+      selectedIndex: null
+    }
   },
-  inject: ["reload"],
+  inject: ['reload'],
   props: {
     detailArr: { required: true },
-    Title: { required: false },
+    Title: { required: false }
   },
   methods: {
-    mouseEnter(index) {
-      this.selectedIndex = index;
+    mouseEnter (index) {
+      this.selectedIndex = index
     },
-    mouseLeave() {
-      this.selectedIndex = null;
+    mouseLeave () {
+      this.selectedIndex = null
     },
-    pushToPage(i) {
+    pushToPage (i) {
       switch (this.detailArr[0].type) {
         case 0:
           this.$router.push({
-            path: `/songdetail`,
+            path: '/songdetail',
             query: {
-              id: this.detailArr[i].id,
-            },
-          });
-          break;
+              id: this.detailArr[i].id
+            }
+          })
+          break
         case 1:
           this.$router.push({
-            path: `/playlist/list`,
+            path: '/playlist/list',
             query: {
-              id: this.detailArr[i].id,
-            },
-          });
-          break;
+              id: this.detailArr[i].id
+            }
+          })
+          break
         case 2:
           this.$router.push({
-            path: `/albumdetail`,
+            path: '/albumdetail',
             query: {
-              id: this.detailArr[i].id,
-            },
-          });
+              id: this.detailArr[i].id
+            }
+          })
       }
     },
-    pushToSingerPage(id) {
+    pushToSingerPage (id) {
       this.$router.push({
-        path: `/singerdetail/choiceness`,
+        path: '/singerdetail/choiceness',
         query: {
-          id: id,
-        },
-      });
-      this.reload();
-    },
-  },
-};
+          id
+        }
+      })
+      this.reload()
+    }
+  }
+}
 </script>
 
 <style scoped>

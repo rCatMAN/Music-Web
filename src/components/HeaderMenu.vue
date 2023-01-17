@@ -59,45 +59,44 @@
 
 <script>
 export default {
-  name: "HeaderMenu",
+  name: 'HeaderMenu',
   props: {},
-  data() {
+  data () {
     return {
       popoverShow: false,
       circleUrl:
-        "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-      keywords: "",
-      circleUrl: "",
-    };
+        'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      keywords: ''
+    }
   },
   computed: {
-    userName() {
-      return this.$store.state.user.userName;
-    },
+    userName () {
+      return this.$store.state.user.userName
+    }
   },
   methods: {
-    toLogin() {
+    toLogin () {
       this.$router.push({
-        path: "/login",
-      });
+        path: '/login'
+      })
     },
-    forward() {
-      this.$router.forward();
+    forward () {
+      this.$router.forward()
     },
-    back() {
-      this.$router.back();
+    back () {
+      this.$router.back()
     },
-    PushTo(keywords) {
+    PushTo (keywords) {
       this.$router.replace({
-        path: `/search/song`,
+        path: '/search/song',
         query: {
-          keywords,
-        },
-      });
-      this.keywords = null;
-    },
-  },
-};
+          keywords
+        }
+      })
+      this.keywords = null
+    }
+  }
+}
 </script>
 <style scoped>
 .icon:hover {

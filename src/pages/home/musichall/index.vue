@@ -21,58 +21,58 @@
 
 <script>
 export default {
-  name: "musichall",
-  data() {
+  name: 'musichall',
+  data () {
     return {
       musicHallMenu: [
-        { id: "/musichall/choiceness", title: "精选" },
-        { id: "/musichall/voiceradio", title: "有声电台" },
-        { id: "/musichall/leaderboard", title: "排行" },
-        { id: "/musichall/singer", title: "歌手" },
-        { id: "/musichall/songclassify", title: "分类歌单" },
-        { id: "/musichall/digitalalbum", title: "数字专辑" },
-        { id: "/musichall/phoneexclusive", title: "手机专享" },
+        { id: '/musichall/choiceness', title: '精选' },
+        { id: '/musichall/voiceradio', title: '有声电台' },
+        { id: '/musichall/leaderboard', title: '排行' },
+        { id: '/musichall/singer', title: '歌手' },
+        { id: '/musichall/songclassify', title: '分类歌单' },
+        { id: '/musichall/digitalalbum', title: '数字专辑' },
+        { id: '/musichall/phoneexclusive', title: '手机专享' }
       ],
       selectIndex: 0,
-      selectLeft: "25px",
-    };
+      selectLeft: '25px'
+    }
   },
   watch: {
-    selectIndex(n) {
+    selectIndex (n) {
       switch (n) {
         case 0:
-          this.selectLeft = "25px";
-          break;
+          this.selectLeft = '25px'
+          break
         case 1:
-          this.selectLeft = "125px";
-          break;
+          this.selectLeft = '125px'
+          break
         case 2:
-          this.selectLeft = "221px";
-          break;
+          this.selectLeft = '221px'
+          break
         case 3:
-          this.selectLeft = "303px";
-          break;
+          this.selectLeft = '303px'
+          break
         case 4:
-          this.selectLeft = "400px";
-          break;
+          this.selectLeft = '400px'
+          break
         case 5:
-          this.selectLeft = "515px";
-          break;
+          this.selectLeft = '515px'
+          break
         case 6:
-          this.selectLeft = "629px";
-          break;
+          this.selectLeft = '629px'
+          break
       }
-    },
+    }
   },
   methods: {
-    changeSelected(index, id) {
-      this.selectIndex = index;
+    changeSelected (index, id) {
+      this.selectIndex = index
       this.$router.push({
-        path: id,
-      });
-    },
-  },
-};
+        path: id
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

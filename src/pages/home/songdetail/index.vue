@@ -409,7 +409,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       simiPlayList: null,
       commentsTotal: null,
@@ -417,103 +417,103 @@ export default {
       comments: null,
       hotComments: null,
       mvDetail: null,
-      url: "",
+      url: '',
       id: this.$route.query.id,
-      title: "",
-      album: "",
-      mvid: "",
-      singer: "",
-      singer2: "",
-      min: "",
-      sec: "",
+      title: '',
+      album: '',
+      mvid: '',
+      singer: '',
+      singer2: '',
+      min: '',
+      sec: '',
       ifShowNum: 13,
-      ifShowWord: "[展开]",
+      ifShowWord: '[展开]',
       lyric: null,
-      textarea: "",
+      textarea: '',
       textLeft: 300,
-      circleUrl: "",
-    };
+      circleUrl: ''
+    }
   },
-  mounted() {
-    //获取单曲信息
+  mounted () {
+    // 获取单曲信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/song/detail?ids=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/song/detail?ids=${this.id}`
     }).then((response) => {
-      this.songDetail = response.data.songs[0];
-      this.title = this.songDetail.name;
-      this.url = this.songDetail.al.picUrl;
-      this.album = this.songDetail.al.name;
-      this.mvid = this.songDetail.mv;
-      this.min = parseInt((this.songDetail.dt * 0.001) / 60);
-      this.sec = parseInt((this.songDetail.dt * 0.001) % 60);
-      //相关mv
+      this.songDetail = response.data.songs[0]
+      this.title = this.songDetail.name
+      this.url = this.songDetail.al.picUrl
+      this.album = this.songDetail.al.name
+      this.mvid = this.songDetail.mv
+      this.min = parseInt((this.songDetail.dt * 0.001) / 60)
+      this.sec = parseInt((this.songDetail.dt * 0.001) % 60)
+      // 相关mv
       if (this.mvid) {
         this.$axios({
-          method: "GET",
-          url: `http://localhost:3000/mv/detail?mvid=${this.mvid}`,
+          method: 'GET',
+          url: `http://localhost:3000/mv/detail?mvid=${this.mvid}`
         }).then((response) => {
-          this.mvDetail = response.data.data;
-        });
+          this.mvDetail = response.data.data
+        })
       }
-    });
-    //获取单曲歌词信息
+    })
+    // 获取单曲歌词信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/lyric?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/lyric?id=${this.id}`
     }).then((response) => {
-      var arry = new Array();
-      this.lyric = response.data.lrc.lyric.split("\n");
+      const array = []
+      this.lyric = response.data.lrc.lyric.split('\n')
       this.lyric.forEach((data) => {
-        let arr1 = data.split("]");
-        arry.push({ time: arr1[0] + "]", ly: arr1[1] });
-      });
-      this.lyric = arry;
-    });
-    //获取单曲评论信息
+        const arr1 = data.split(']')
+        array.push({ time: arr1[0] + ']', ly: arr1[1] })
+      })
+      this.lyric = array
+    })
+    // 获取单曲评论信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/comment/music?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/comment/music?id=${this.id}`
     }).then((response) => {
       // console.log("评论信息", response);
-      this.comments = response.data.comments;
-      this.hotComments = response.data.hotComments;
-      this.commentsTotal = response.data.total;
-    });
-    //获取相似歌单信息
+      this.comments = response.data.comments
+      this.hotComments = response.data.hotComments
+      this.commentsTotal = response.data.total
+    })
+    // 获取相似歌单信息
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/simi/playlist?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/simi/playlist?id=${this.id}`
     }).then((response) => {
-      this.simiPlayList = response.data.playlists;
-    });
+      this.simiPlayList = response.data.playlists
+    })
   },
   methods: {
-    isShowLy() {
-      if (this.ifShowNum == 1000) {
-        this.ifShowNum = 13;
-        this.ifShowWord = "[展开]";
+    isShowLy () {
+      if (this.ifShowNum === 1000) {
+        this.ifShowNum = 13
+        this.ifShowWord = '[展开]'
       } else {
-        this.ifShowNum = 1000;
-        this.ifShowWord = "[收起]";
+        this.ifShowNum = 1000
+        this.ifShowWord = '[收起]'
       }
     },
-    PlaySongTo() {
+    PlaySongTo () {
       this.$router.push({
-        path: `/player`,
-      });
-      this.$store.commit("ChangePlaySongId", { id: this.id });
+        path: '/player'
+      })
+      this.$store.commit('ChangePlaySongId', { id: this.id })
     },
-    toSingerPage(id) {
+    toSingerPage (id) {
       this.$router.push({
-        path: `/singerdetail/choiceness`,
+        path: '/singerdetail/choiceness',
         query: {
-          id: id,
-        },
-      });
-    },
-  },
-};
+          id
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>

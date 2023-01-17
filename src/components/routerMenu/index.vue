@@ -18,28 +18,28 @@
 
 <script>
 export default {
-  name: "routerMenu",
+  name: 'routerMenu',
   props: {
     content: { required: true },
-    id: { required: false },
+    id: { required: false }
   },
-  data() {
+  data () {
     return {
-      selectIndex: 0,
-    };
+      selectIndex: 0
+    }
   },
   methods: {
-    toPage(path, index) {
+    toPage (path, index) {
       this.$router.push({
-        path: path,
+        path,
         query: {
-          id: this.id,
-        },
-      });
-      this.selectIndex = index;
-    },
-  },
-};
+          id: this.id
+        }
+      })
+      this.selectIndex = index
+    }
+  }
+}
 </script>
 <style scoped >
 .SvgIconBox {

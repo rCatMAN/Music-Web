@@ -14,11 +14,11 @@
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["content", "iconClass"],
-};
+  props: ['content', 'iconClass']
+}
 </script>
 
 <style scoped>

@@ -196,104 +196,104 @@
 </template>
 
 <script>
-import ScrollPicker from "@/components/scroll-picker/picker/picker";
+import ScrollPicker from '@/components/scroll-picker/picker/picker'
 export default {
   components: { ScrollPicker },
-  name: "player",
+  name: 'player',
   mixins: [],
-  data() {
+  data () {
     return {
       picker: null,
       loading: true,
-      url: "",
+      url: '',
       songDetail: null,
-      lyric: null,
-    };
+      lyric: null
+    }
   },
   computed: {
-    id() {
-      return this.$store.state.nowPlayingID;
+    id () {
+      return this.$store.state.nowPlayingID
     },
-    //计算歌词滚动对比时间
-    PlayTime() {
-      var s;
-      var m;
-      var time = this.$store.state.PlayTime;
+    // 计算歌词滚动对比时间
+    PlayTime () {
+      const time = this.$store.state.PlayTime
       if (time < 10) {
-        return "00:0" + time.toFixed(1);
+        return '00:0' + time.toFixed(1)
       } else if (time < 60) {
-        return "00:" + time.toFixed(1);
+        return '00:' + time.toFixed(1)
       } else if (time > 60) {
-        m = time.toFixed(1) / 60;
-        s = time.toFixed(1) % 60;
+        const m = time.toFixed(1) / 60
+        const s = time.toFixed(1) % 60
+        let ss
         if (s < 10) {
-          var ss = "0" + s.toFixed(1);
+          ss = '0' + s.toFixed(1)
         } else {
-          var ss = s.toFixed(1);
+          ss = s.toFixed(1)
         }
-        return "0" + parseInt(m) + ":" + ss;
-      } else if ((time = 0)) {
-        return "00:00";
+        return '0' + parseInt(m) + ':' + ss
+      } else if ((time === 0)) {
+        return '00:00'
       }
-    },
+      return ''
+    }
   },
   watch: {
     id: {
-      handler(newid, oldid) {
-        if (newid != oldid) {
-          console.log("id有变化", newid, oldid);
-          this.lyric = null;
-          //获取当前播放歌曲信息
+      handler (newId, oldId) {
+        if (newId !== oldId) {
+          console.log('id有变化', newId, oldId)
+          this.lyric = null
+          // 获取当前播放歌曲信息
           this.$axios({
-            method: "GET",
-            url: `http://localhost:3000/song/detail?ids=${newid}`,
+            method: 'GET',
+            url: `http://localhost:3000/song/detail?ids=${newId}`
           }).then((response) => {
-            this.songDetail = response.data.songs[0];
-            this.url = this.songDetail.al.picUrl;
-          });
-          //获取单曲歌词信息
+            this.songDetail = response.data.songs[0]
+            this.url = this.songDetail.al.picUrl
+          })
+          // 获取单曲歌词信息
           this.$axios({
-            method: "GET",
-            url: `http://localhost:3000/lyric?id=${newid}`,
+            method: 'GET',
+            url: `http://localhost:3000/lyric?id=${newId}`
           }).then((response) => {
-            var arry = new Array();
-            this.lyric = response.data.lrc.lyric.split("\n");
+            const array = []
+            this.lyric = response.data.lrc.lyric.split('\n')
             this.lyric.forEach((data) => {
-              let arr2 = data.split("]");
-              let str = arr2[0].slice(1, 8);
-              if (arr2[1] != "") {
-                arry.push({ value: str, name: arr2[1] });
+              const arr2 = data.split(']')
+              const str = arr2[0].slice(1, 8)
+              if (arr2[1] !== '') {
+                array.push({ value: str, name: arr2[1] })
               }
-            });
-            this.lyric = arry;
-            console.log("arry: ", arry);
-          });
+            })
+            this.lyric = array
+            console.log('array: ', array)
+          })
         }
       },
 
-      immediate: true,
+      immediate: true
     },
-    //歌词滚动----------------------------------------
-    picker(n) {
+    // 歌词滚动----------------------------------------
+    picker (n) {
       if (this.lyric) {
       }
     },
-    PlayTime(n) {
-      this.picker = n;
+    PlayTime (n) {
+      this.picker = n
     },
-    //-----------------------------------------------
-    songDetail(newValue, oldValue) {
-      if (newValue != null) this.loading = false;
-    },
+    // -----------------------------------------------
+    songDetail (newValue, oldValue) {
+      if (newValue != null) this.loading = false
+    }
   },
-  mounted() {},
-  destroyed() {},
+  mounted () {},
+  destroyed () {},
   methods: {
-    back() {
-      this.$router.back();
-    },
-  },
-};
+    back () {
+      this.$router.back()
+    }
+  }
+}
 </script>
 
 <style scoped>

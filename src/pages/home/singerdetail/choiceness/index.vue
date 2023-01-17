@@ -76,11 +76,11 @@
 </template>
 
 <script>
-import HorizontalList from "@/components/HorizontalList.vue";
-import similarSingerList from "@/components/similarSingerList";
+import HorizontalList from '@/components/HorizontalList.vue'
+import similarSingerList from '@/components/similarSingerList'
 export default {
   components: { HorizontalList, similarSingerList },
-  data() {
+  data () {
     return {
       id: this.$route.query.id,
       hotSongsList: [],
@@ -88,80 +88,80 @@ export default {
       recommendVideo: [],
       similarSinger: {
         isLoaded: false,
-        simSingerList: [],
-      },
-    };
+        simSingerList: []
+      }
+    }
   },
-  inject: ["reload"],
+  inject: ['reload'],
   methods: {
-    toSongPage(id) {
+    toSongPage (id) {
       this.$router.push({
-        path: `/songdetail`,
+        path: '/songdetail',
         query: {
-          id: id,
-        },
-      });
+          id
+        }
+      })
     },
-    toSingerPage(id) {
+    toSingerPage (id) {
       this.$router.push({
-        path: `/singerdetail/choiceness`,
+        path: '/singerdetail/choiceness',
         query: {
-          id: id,
-        },
-      });
-      this.reload();
-    },
+          id
+        }
+      })
+      this.reload()
+    }
   },
-  mounted() {
-    //获取歌手热门歌曲
+  mounted () {
+    // 获取歌手热门歌曲
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/artist/top/song?id=${this.id}`,
+      method: 'GET',
+      url: `http://localhost:3000/artist/top/song?id=${this.id}`
     }).then((response) => {
       for (let index = 0; index < 10; index++) {
-        this.hotSongsList.push(response.data.songs[index]);
+        this.hotSongsList.push(response.data.songs[index])
       }
-    });
-    //获取歌手热门专辑
+    })
+    // 获取歌手热门专辑
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/artist/album?id=${this.id}&limit=5`,
+      method: 'GET',
+      url: `http://localhost:3000/artist/album?id=${this.id}&limit=5`
     }).then((response) => {
       for (let i = 0; i < response.data.hotAlbums.length; i++) {
-        var arr = {
+        const arr = {
           name: response.data.hotAlbums[i].name,
           artists: response.data.hotAlbums[i].artists,
           picUrl: response.data.hotAlbums[i].picUrl,
           id: response.data.hotAlbums[i].id,
-          type: 2,
-        };
-        this.hotAlbumList.push(arr);
+          type: 2
+        }
+        this.hotAlbumList.push(arr)
       }
-    });
-    //获取歌手视频
+    })
+    // 获取歌手视频
     this.$axios({
-      method: "GET",
-      url: `http://localhost:3000/artist/video?id=${this.id}&order=1`,
+      method: 'GET',
+      url: `http://localhost:3000/artist/video?id=${this.id}&order=1`
     }).then((response) => {
       for (let index = 0; index < 5; index++) {
-        this.recommendVideo.push(response.data.data.records[index].resource);
+        this.recommendVideo.push(response.data.data.records[index].resource)
       }
-    });
-    //获取相似歌手
+    })
+    // 获取相似歌手
     this.$axios({
-      method: "GET",
+      method: 'GET',
       url: `http://localhost:3000/simi/artist?id=${this.id}`,
-      withCredentials: true,
+      withCredentials: true
     }).then((response) => {
-      this.similarSinger.isLoaded = true;
-      console.log("response: ", response);
+      this.similarSinger.isLoaded = true
+      console.log('response: ', response)
       for (let index = 0; index < 5; index++) {
-        this.similarSinger.simSingerList.push(response.data.artists[index]);
-        console.log(" this.similarSinger: ", this.similarSinger);
+        this.similarSinger.simSingerList.push(response.data.artists[index])
+        console.log(' this.similarSinger: ', this.similarSinger)
       }
-    });
-  },
-};
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
