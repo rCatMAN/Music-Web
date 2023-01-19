@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between" style="width: 1500px;">
       <div v-for="(item, index) in videoList" :key="index" class="relative">
         <el-image
           @mouseleave="mouseLeave"
@@ -10,7 +10,7 @@
           :style="{
             transform:
               selectedIndex === index
-                ? 'translate(10px, -10px)'
+                ? 'translate(7px, -7px)'
                 : 'translate(0px, 0px)',
           }"
           :src="item.mlogBaseData.coverUrl"
@@ -21,7 +21,7 @@
           class="blackCover absolute cursor-pointer duration-500 primary-bg"
           style="width: 230px; height: 140px; left: 0px; top: 0px"
         ></div>
-        <div class="mt-4">
+        <div class="mt-4"  style="max-width: 230px;">
           <span
             class="
               cursor-pointer
@@ -30,6 +30,7 @@
               font-semibold
               primary-color__hover
             "
+            style="max-width: 230px;"
           >
             {{ item.mlogBaseData.text }}</span
           >

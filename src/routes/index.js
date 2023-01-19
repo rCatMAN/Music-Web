@@ -21,6 +21,9 @@ import singersongs from '../pages/home/singerdetail/songs'
 import singervideos from '../pages/home/singerdetail/video'
 // 歌曲详情页面
 import Songdetail from '../pages/home/songdetail'
+//专辑详情
+import albumDetail from '../pages/home/albumdetail'
+
 // 歌单
 import Playlist from '../pages/home/playlist'
 import musiclist from '../pages/home/playlist/list'
@@ -132,6 +135,14 @@ export default new CreateRouter({
             }
           ]
         },
+        {
+          path: '/albumdetail',
+          component: albumDetail,
+          props: true,
+          children: []
+        },
+
+        
         {
           path: '/search',
           component: Search,

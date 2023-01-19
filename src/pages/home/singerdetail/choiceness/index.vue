@@ -157,7 +157,6 @@ export default {
       console.log('response: ', response)
       for (let index = 0; index < 5; index++) {
         this.similarSinger.simSingerList.push(response.data.artists[index])
-        console.log(' this.similarSinger: ', this.similarSinger)
       }
     })
   }

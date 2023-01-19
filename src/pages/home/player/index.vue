@@ -274,10 +274,6 @@ export default {
       immediate: true
     },
     // 歌词滚动----------------------------------------
-    picker(n) {
-      if (this.lyric) {
-      }
-    },
     PlayTime(n) {
       this.picker = n
     },
