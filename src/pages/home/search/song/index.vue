@@ -73,7 +73,7 @@ export default {
   mounted() {
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/search?keywords=${this.keywords}&offset=0&limit=20&type=1`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/search?keywords=${this.keywords}&offset=0&limit=20&type=1`
     }).then((response) => {
       console.log('搜索信息', response.data.result.songs)
       this.tableData = response.data.result.songs

@@ -82,7 +82,7 @@ export default {
     // 获取歌单中评论信息
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/comment/playlist?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/comment/playlist?id=${this.id}`
     }).then((response) => {
       console.log('歌单评论信息: ', response)
       this.hotCommentList = response.data.hotComments

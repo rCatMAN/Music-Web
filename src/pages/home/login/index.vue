@@ -157,7 +157,7 @@ export default {
     SentCaptcha() {
       this.$axios({
         method: 'post',
-        url: `http://localhost:3000/captcha/sent?phone=${this.phone}`
+        url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/captcha/sent?phone=${this.phone}`
       }).then((response) => {
         console.log('发送验证码', response)
       })
@@ -165,7 +165,7 @@ export default {
     phonLogin() {
       this.$axios({
         method: 'post',
-        url: 'http://localhost:3000/login/cellphone',
+        url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/login/cellphone',
         data: {
           phone: this.phone,
           captcha: this.captcha
@@ -181,7 +181,7 @@ export default {
     verify() {
       this.$axios({
         method: 'post',
-        url: `http://localhost:3000/captcha/verify?phone=${this.phone}&captcha=${this.captcha}`,
+        url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/captcha/verify?phone=${this.phone}&captcha=${this.captcha}`,
         Headers: {
           'Access-Control-Allow-Origin': '*'
         }

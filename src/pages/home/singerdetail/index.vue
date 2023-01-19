@@ -66,14 +66,14 @@ export default {
     // 获取歌手详情
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/artist/detail?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/artist/detail?id=${this.id}`
     }).then((response) => {
       this.singerDetailList = response.data.data.artist
     })
     // 获取歌手粉丝
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/artist/follow/count?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/artist/follow/count?id=${this.id}`
     }).then((response) => {
       this.singerFans = response.data.data.fansCnt
     })

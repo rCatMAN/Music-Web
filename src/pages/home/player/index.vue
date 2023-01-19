@@ -246,7 +246,7 @@ export default {
           // 获取当前播放歌曲信息
           this.$axios({
             method: 'GET',
-            url: `http://localhost:3000/song/detail?ids=${newId}`
+            url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/song/detail?ids=${newId}`
           }).then((response) => {
             this.songDetail = response.data.songs[0]
             this.url = this.songDetail.al.picUrl
@@ -254,7 +254,7 @@ export default {
           // 获取单曲歌词信息
           this.$axios({
             method: 'GET',
-            url: `http://localhost:3000/lyric?id=${newId}`
+            url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/lyric?id=${newId}`
           }).then((response) => {
             const array = []
             this.lyric = response.data.lrc.lyric.split('\n')

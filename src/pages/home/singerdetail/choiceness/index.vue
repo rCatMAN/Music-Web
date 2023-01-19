@@ -116,7 +116,7 @@ export default {
     // 获取歌手热门歌曲
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/artist/top/song?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/artist/top/song?id=${this.id}`
     }).then((response) => {
       for (let index = 0; index < 10; index++) {
         this.hotSongsList.push(response.data.songs[index])
@@ -125,7 +125,7 @@ export default {
     // 获取歌手热门专辑
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/artist/album?id=${this.id}&limit=5`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/artist/album?id=${this.id}&limit=5`
     }).then((response) => {
       for (let i = 0; i < response.data.hotAlbums.length; i++) {
         const arr = {
@@ -141,7 +141,7 @@ export default {
     // 获取歌手视频
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/artist/video?id=${this.id}&order=1`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/artist/video?id=${this.id}&order=1`
     }).then((response) => {
       for (let index = 0; index < 5; index++) {
         this.recommendVideo.push(response.data.data.records[index].resource)
@@ -150,7 +150,7 @@ export default {
     // 获取相似歌手
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/simi/artist?id=${this.id}`,
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/simi/artist?id=${this.id}`,
       withCredentials: true
     }).then((response) => {
       this.similarSinger.isLoaded = true

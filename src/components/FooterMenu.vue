@@ -393,7 +393,7 @@ export default {
         }
         this.$axios({
           method: 'GET',
-          url: `http://localhost:3000/song/detail?ids=${newId}`
+          url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/song/detail?ids=${newId}`
         }).then((response) => {
           this.songDetail = response.data.songs[0]
           this.TotalTime.DetailTime =
@@ -408,7 +408,7 @@ export default {
         // 取得音乐链接
         this.$axios({
           method: 'GET',
-          url: `http://localhost:3000/song/url/v1?id=${newId}&level=${this.level}`,
+          url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/song/url/v1?id=${newId}&level=${this.level}`,
           withCredentials: true
         }).then((response) => {
           this.$store.commit('NewHowler', { url: response.data.data[0].url })

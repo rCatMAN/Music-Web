@@ -56,7 +56,7 @@ export default {
     // 精选歌单
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/top/playlist/highquality&limit=5'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/top/playlist/highquality&limit=5'
     }).then((response) => {
       for (let i = 0; i < 5; i++) {
         const arr = {
@@ -73,14 +73,14 @@ export default {
     })
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/banner?type=0'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/banner?type=0'
     }).then((response) => {
       this.bannerDetails = response.data.banners
     })
     // 新歌首发
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/top/song'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/top/song'
     }).then((response) => {
       for (let i = 0; i < 5; i++) {
         const arr = {

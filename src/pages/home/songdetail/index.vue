@@ -438,7 +438,7 @@ export default {
     // 获取单曲信息
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/song/detail?ids=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/song/detail?ids=${this.id}`
     }).then((response) => {
       this.songDetail = response.data.songs[0]
       this.title = this.songDetail.name
@@ -451,7 +451,7 @@ export default {
       if (this.mvid) {
         this.$axios({
           method: 'GET',
-          url: `http://localhost:3000/mv/detail?mvid=${this.mvid}`
+          url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/mv/detail?mvid=${this.mvid}`
         }).then((response) => {
           this.mvDetail = response.data.data
         })
@@ -460,7 +460,7 @@ export default {
     // 获取单曲歌词信息
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/lyric?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/lyric?id=${this.id}`
     }).then((response) => {
       const array = []
       this.lyric = response.data.lrc.lyric.split('\n')
@@ -473,7 +473,7 @@ export default {
     // 获取单曲评论信息
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/comment/music?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/comment/music?id=${this.id}`
     }).then((response) => {
       // console.log("评论信息", response);
       this.comments = response.data.comments
@@ -483,7 +483,7 @@ export default {
     // 获取相似歌单信息
     this.$axios({
       method: 'GET',
-      url: `http://localhost:3000/simi/playlist?id=${this.id}`
+      url: `https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/simi/playlist?id=${this.id}`
     }).then((response) => {
       this.simiPlayList = response.data.playlists
     })

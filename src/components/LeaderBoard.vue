@@ -142,7 +142,7 @@ export default {
     // 热歌榜
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/playlist/track/all?id=3778678&limit=3'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/playlist/track/all?id=3778678&limit=3'
     }).then((response) => {
       const arr = {
         title: '热歌',
@@ -172,7 +172,7 @@ export default {
     // 新歌榜
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/playlist/track/all?id=3779629&limit=3'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/playlist/track/all?id=3779629&limit=3'
     }).then((response) => {
       const arr = {
         title: '新歌',
@@ -201,7 +201,7 @@ export default {
     // 流行指数
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/playlist/track/all?id=19723756&limit=3'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/playlist/track/all?id=19723756&limit=3'
     }).then((response) => {
       const arr = {
         title: '流行指数',
@@ -231,7 +231,7 @@ export default {
     // 欧美
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/playlist/track/all?id=2809513713&limit=3'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/playlist/track/all?id=2809513713&limit=3'
     }).then((response) => {
       const arr = {
         title: '欧美',
@@ -261,7 +261,7 @@ export default {
     // 韩国
     this.$axios({
       method: 'GET',
-      url: 'http://localhost:3000/playlist/track/all?id=745956260&limit=3'
+      url: 'https://service-miegmo5o-1314215170.gz.apigw.tencentcs.com/release/playlist/track/all?id=745956260&limit=3'
     }).then((response) => {
       const arr = {
         title: '韩国',
